@@ -1,0 +1,250 @@
+/*
+ * logo colors: #FF7C20, #929292
+ * border color: #C9C9C9
+ * link highlight: #D9691B
+ * light background: #F3F3F3
+ */
+html {
+	font: 400 15px/1.5em 'Source Sans Pro', sans-serif;
+	background: #C9C9C9;
+}
+body {
+	background: #FFF;
+	max-width: 850px;
+	margin: 10px auto 20px;
+	box-shadow: 0px 0px 5px 2px #929292;
+}
+a {
+	color: inherit;
+	transition: color .5s;
+}
+a:hover, a:active {
+	color: #D9691B;
+	transition: color 0s;
+}
+
+#header {
+	background: linear-gradient(#E9E9E9, #C9C9C9);
+	box-shadow: 0 1px 3px 1px #929292;
+	padding: .5em 1em;
+	position: relative;
+}
+#logo img {
+	height: 100px;
+	margin-top: 5px;
+	margin-left: 10px;
+}
+#header nav div {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-style: italic;
+	font-size: 12px;
+}
+#header nav ul {
+	position: absolute;
+	bottom: 10px;
+	right: 5px;
+	margin: 0;
+	list-style: none;
+}
+#header nav li {
+	float: left;
+	margin-right: 2px;
+}
+#header nav li a {
+	color: inherit;
+	padding: 3px 5px;
+	border-radius: 2px;
+	text-decoration: none;
+	transition: 2s;
+	box-shadow: 0 0 2px 1px rgba(128, 128, 128, .2) inset;
+}
+#header nav li a:hover, #header nav li a:active {
+	color: inherit;
+	background: rgba(128, 128, 128, .2);
+	transition: .5s;
+}
+footer {
+	color: #929292;
+	font-size: 12px;
+	font-style: italic;
+	margin-top: 1em;
+	text-align: center;
+}
+footer a {
+	color: #929292;
+}
+footer a:hover, footer a:active {
+	color: #626262;
+}
+
+main {
+	display: block;
+	padding: 1em 1.5em;
+}
+p {
+	margin: .5em 0;
+}
+
+/* headings */
+h1, h2, h3, h4, h5 {
+	margin: 0;
+}
+h1 {
+	margin-bottom: .5em;
+	font-style: italic;
+	font-weight: 400;
+}
+h2 {
+	font-weight: normal;
+	font-style: italic;
+	margin: 1em 0 .5em;
+}
+h3 {
+	font-weight: 600;
+	/*padding-left: 7px;*/
+}
+
+h2 a, h3 a, h4 a {
+	text-decoration: inherit;
+	color: inherit;
+}
+h2 a:hover::after, h2 a:active::after, h3 a:hover::after, h3 a:active::after {
+	content: '¶';
+	color: #C9C9C9;
+	padding-left: 10px;
+}
+h2:target a::after, h3:target a::after {
+	content: '¶';
+	color: #D9691B;
+	padding-left: 10px;
+}
+
+/* definition lists */
+dl {
+	margin: .5em 0;
+}
+dl > dt:nth-of-type(2n), dl > dd:nth-of-type(2n) {
+	background: #F3F3F3;
+}
+dt {
+	float: left;
+	width: 200px;
+	padding-left: 3px;
+}
+
+/* code stuff */
+code {
+	font-family: 'Source Code Pro', monospace;
+	background: #F3F3F3;
+}
+pre {
+	font-size: 14px;
+	border: 1px dashed #FF7C20;
+	border-left: 8px solid #FF7C20;
+	background: #F3F3F3;
+	margin: .5em 0 .5em 14px;
+	padding: 5px 10px;
+}
+h2 code, h3 code {
+	font-size: .8em;
+	padding: 2px 5px;
+	font-weight: normal;
+}
+
+/* tables */
+table {
+    width: 100%;
+    border: 1px solid #C9C9C9;
+    box-shadow: 0px 2px 3px -1px #929292;
+    border-collapse: collapse;
+    margin-bottom: .5em;
+}
+th {
+    background: linear-gradient(#F3F3F3, #E9E9E9);
+    border-bottom: 1px solid #C9C9C9;
+    text-align: left;
+}
+tbody tr:nth-child(2n) {
+    background: #F3F3F3;
+}
+td, th {
+    padding: 3px 5px 1px;
+}
+
+/* tags */
+span.tag, ul.tags li {
+	font-size: .85em;
+	background: #F3F3F3;
+    padding: 2px 5px;
+    border: 1px solid #C9C9C9;
+    box-shadow: 1px 1px 2px #929292;
+}
+ul.tags {
+    padding: 0;
+    margin: 0;
+}
+ul.tags li {
+    display: inline;
+    margin-right: 8px;
+}
+
+/* chat box */
+ul.chat {
+	border: 1px dashed #C9C9C9;
+	border-left: 5px solid #C9C9C9;
+	list-style: none;
+	padding: 0;
+}
+ul.chat > li:nth-child(2n) {
+	background: #F3F3F3;
+}
+ul.chat li .user {
+	float: left;
+	margin-left: 3px;
+}
+ul.chat li p {
+	margin: 0px 0 0px 150px;
+}
+
+
+/* questions list */
+body.questions p {
+	padding-left: 7px;
+}
+
+body.questions article {
+	margin: .5em 0 1em;
+}
+body.questions section {
+	border-left: 5px solid #C9C9C9;
+	margin-bottom: 1em;
+}
+body.questions section:target {
+	border-left: 5px solid #FF7C20;
+}
+
+ul.questions {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	border-bottom: 1px dashed #C9C9C9;
+}
+ul.questions li a {
+	display: block;
+	border: 0 dashed #C9C9C9;
+	border-width: 1px 1px 0 0;
+	padding: 3px 5px;
+}
+ul.questions li a:hover, ul.questions li a:active {
+	background: #F3F3F3;
+}
+ul.questions li span {
+	float: left;
+	width: 25px;
+	text-align: right;
+	margin-right: 10px;
+	font-style: italic;
+	color: #929292;
+}

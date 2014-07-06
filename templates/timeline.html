@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <header>
+    <h1>{{ post.title }}</h1>
+    <ul class="tags">
+      {% for tag in post.tags %}
+      <li>{{ tag }}</li>
+      {% endfor %}
+    </ul>
+  </header>
+
+  <h2 id="activity"><a href="#activity">Activity</a></h2>
+  <p>First seen: <date datetime="{{ post.datetime_seen | date }}">{{ post.datetime_seen | date }}</date>.</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Time</th>
+        <th>Id</th>
+        <th>Action</th>
+        <th>Action Id</th>
+        <th>Comment Id</th>
+        <th>Answer Id</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in post.timeline %}
+      <tr>
+        <td>{{ item.datetime_seen.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.a }}</td>
+        <td>{{ item.acctid }}</td>
+        <td>{{ item.commentid }}</td>
+        <td>{{ item.answerid }}</td>
+        <td>{{ item.score }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2 id="text"><a href="#text">Text</a></h2>
+  <div id="body">
+    {{ post.body | safe }}
+  </div>
+{% endblock %}

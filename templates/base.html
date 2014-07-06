@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>
+    {%- block title -%}
+    {% if title %}{{ title }} — sopython{% else %}sopython{% endif %}
+    {%- endblock -%}
+  </title>
+
+  <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,600" rel="stylesheet" type="text/css" />
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" type="text/css" />
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png" />
+<link rel="stylesheet" href="{{ url_for('static', filename='highlight.css') }}" type="text/css" />
+
+</head>
+<body{% if self.body_class %} class="{{ self.body_class() }}"{% endif %}>
+
+<header id="header">
+  <a id="logo" href="{{ url_for('cabbage') }}"><img src="{{ url_for('static', filename='sopython.svg') }}" alt="sopython" /></a>
+  <nav>
+    <div>
+      {%- if session.user -%}
+      Logged in as <a href="{{ session.user.link }}">{{ session.user.display_name }}</a> • <a href="{{ url_for('logout', redirect=request.path) }}" title="Log out">Log out</a>
+      {%- else -%}
+      <a href="{{ url_for('login', redirect=request.path) }}" title="Log in with StackExchange">Log in</a>
+      {%- endif -%}
+    </div>
+    <ul>
+      <li><a href="{{ url_for('questions') }}">Common questions</a></li>
+      <li><a href="{{ url_for('etiquette') }}">Etiquette</a></li>
+      <li><a href="{{ url_for('salad') }}">Salad language</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer>Made by the cabbage addicts from the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="http://stackoverflow.com">StackOverflow</a>.</footer>
+
+</body>
+</html>

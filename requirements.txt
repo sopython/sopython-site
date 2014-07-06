@@ -1,0 +1,13 @@
+Flask==0.10.1
+Jinja2==2.7.2
+Markdown==2.3.1
+MarkupSafe==0.18
+Pygments==1.6
+Sphinx==1.2
+Werkzeug==0.9.4
+docutils==0.11
+hoedown==0.2
+httplib2==0.8
+itsdangerous==0.23
+oauth2
+pymongo==2.6.3
