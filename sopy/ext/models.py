@@ -11,3 +11,9 @@ class IDModel(db.Model):
 
     def compare_value(self):
         return self.id
+
+
+class ExternalIDModel(IDModel):
+    __abstract__ = True
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
