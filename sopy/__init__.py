@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from sopy.ext.sqlalchemy import SQLAlchemy
@@ -14,8 +14,13 @@ def create_app(info=None):
 
     app.cli.add_command(alembic_cli, 'db')
 
+    app.jinja_env.trim_blocks = True
+    app.jinja_env.lstrip_blocks = True
+
     alembic.init_app(app)
     db.init_app(app)
+
+    app.add_url_rule('/', 'index', lambda: render_template('index.html'))
 
     from sopy import tags, sodata, canon
 

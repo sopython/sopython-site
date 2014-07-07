@@ -1,0 +1,15 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <h2>{% block title %}{{ item.title }}{% endblock %}</h2>
+    <ul>{% for tag in item.tags %}
+        <li>{{ tag.name }}</li>
+    {% endfor %}</ul>
+    {{ item.body }}
+    <ul>{% for q in item.questions %}
+        <li>
+            <a href="">{{ question.title }}</a><br/>
+            {{ question.body }}
+        </li>
+    {% endfor %}</ul>
+{% endblock %}

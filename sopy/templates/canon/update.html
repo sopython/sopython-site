@@ -1,0 +1,11 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <h2>{% block title %}{% if item is none %}Create Canonical Item{% else %}Update {{ item.title }}{% endif %}{% endblock %}</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.title.label }} {{ form.title }}<br/>
+        {{ form.body.label }} {{ form.body }}<br/>
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

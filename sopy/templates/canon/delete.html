@@ -1,0 +1,9 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <h2>{% block title %}Delete {{ item.title }}{% endblock %}</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <button type="submit">Delete</button>
+    </form>
+{% endblock %}

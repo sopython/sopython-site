@@ -1,0 +1,9 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <h2>{% block title %}Canonical Question Directory{% endblock %}</h2>
+    <a href="{{ url_for('canon.create') }}">Create</a>
+    <ul>{% for item in items %}
+        <li><a href="{{ item.detail_url }}">{{ item.title }}</a></li>
+    {% endfor %}</ul>
+{% endblock %}
