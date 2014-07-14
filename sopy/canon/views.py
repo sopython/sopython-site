@@ -16,6 +16,7 @@ def index():
 
 
 @bp.route('/<int:id>/')
+@template('canon/detail.html')
 def detail(id):
     item = CanonItem.query.get_or_404(id)
 
@@ -45,7 +46,7 @@ def update(id=None):
 
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
-@template('canon/create.html')
+@template('canon/delete.html')
 def delete(id):
     item = CanonItem.query.get_or_404(id)
     form = Form()

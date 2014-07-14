@@ -1,9 +1,34 @@
 {% extends 'canon/base.html' %}
 
 {% block content %}
-    <h2>{% block title %}Canonical Question Directory{% endblock %}</h2>
-    <a href="{{ url_for('canon.create') }}">Create</a>
-    <ul>{% for item in items %}
-        <li><a href="{{ item.detail_url }}">{{ item.title }}</a></li>
-    {% endfor %}</ul>
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Common Questions{% endblock %}</h2>
+
+        <ul class="list-inline pull-right">
+            <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>
+        </ul>
+
+        <div class="clearfix"></div>
+
+        {% for item in items %}
+            <article>
+                <h3>title</h3>
+
+                <ul class="list-inline pull-left">
+                    {% for tag in item.tags %}
+                        <li>{{ tag.name }}</li>
+                    {% endfor %}
+                </ul>
+
+                <ul class="list-inline pull-right">
+                    <li><a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a></li>
+                    <li><a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a></li>
+                </ul>
+
+                <div class="clearfix"></div>
+
+                {{ item.body }}
+            </article>
+        {% endfor %}
+    </div></div>
 {% endblock %}

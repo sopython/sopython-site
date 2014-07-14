@@ -1,12 +1,43 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8"/>
-    <title>{% block full_title %}{% block title %}{% endblock %} - sopython{% endblock %}</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}{% endblock %} - sopython</title>
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}"/>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/superhero/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"/>
 </head>
 <body>
-<h1>sopython</h1>
-{% block content %}{% endblock %}
-<p>Made by the cabbage addicts from the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="http://stackoverflow.com/">Stack Overflow</a>.</p>
+    <header>
+        <nav class="navbar navbar-inverse navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#base-nav-collapse"><i class="fa fa-bars"></i></button>
+                    <a href="{{ url_for('index') }}" class="navbar-brand"><strong>so</strong>python</a>
+                </div>
+                <div class="collapse navbar-collapse" id="base-nav-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="{% block nav_canon %}{% endblock %}"><a href="{{ url_for('canon.index') }}">Common Questions</a></li>
+                        <li class="{% block nav_etiquette %}{% endblock %}"><a href="#">Etiquette</a></li>
+                        <li class="{% block nav_salad %}{% endblock %}"><a href="{{ url_for('canon.index') }}">Salad Language</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="{% block nav_user %}{% endblock %}"><a href="#">User</a></li>
+                        <li><a href="#">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">{% block content %}{% endblock %}</main>
+
+    <footer class="container">
+        <p>Made by the cabbage addicts from the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="http://stackoverflow.com/">Stack Overflow</a>.</p>
+    </footer>
+
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    {% block script %}{% endblock %}
 </body>
 </html>

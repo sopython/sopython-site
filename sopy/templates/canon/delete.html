@@ -1,9 +1,12 @@
 {% extends 'canon/base.html' %}
 
 {% block content %}
-    <h2>{% block title %}Delete {{ item.title }}{% endblock %}</h2>
-    <form method="post">
-        {{ form.hidden_tag() }}
-        <button type="submit">Delete</button>
-    </form>
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Remove {{ item.title }}{% endblock %}</h2>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-danger"><i class="fa fa-minus"></i> Remove</button>
+        </form>
+    </div></div>
 {% endblock %}

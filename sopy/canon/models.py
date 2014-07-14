@@ -7,6 +7,7 @@ from sopy.tags.models import HasTags
 
 class CanonItem(HasTags, IDModel):
     title = db.Column(db.String, nullable=False)
+    excerpt = db.Column(db.String, nullable=False, default='')
     body = db.Column(db.String, nullable=False, default='')
 
     def __str__(self):

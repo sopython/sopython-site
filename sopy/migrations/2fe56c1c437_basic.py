@@ -35,6 +35,7 @@ def upgrade():
         'canon_item',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('title', sa.String, nullable=False),
+        sa.Column('excerpt', sa.String, nullable=False),
         sa.Column('body', sa.String, nullable=False)
     )
     op.create_table(
