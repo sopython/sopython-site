@@ -16,5 +16,6 @@ Develop
 ::
 
     git clone ssh://git@github.com/sopython/sopython-site sopy
+    pip install -e git+ssh://git@github.com/mitsuhiko/flask
     pip install -e ./sopy
     sopy --debug run -h localhost
