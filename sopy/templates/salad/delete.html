@@ -1,0 +1,14 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Remove {{ item.term }}{% endblock %}</h2>
+
+        <p>This operation is permanent.  Are you sure?</p>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <button type="submit" class="btn btn-danger"><i class="fa fa-minus"></i> Remove</button>
+        </form>
+    </div></div>
+{% endblock %}

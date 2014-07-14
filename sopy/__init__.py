@@ -26,10 +26,11 @@ def create_app(info=None):
 
     app.add_url_rule('/', 'index', lambda: render_template('index.html'))
 
-    from sopy import tags, sodata, canon
+    from sopy import tags, sodata, canon, salad
 
     app.register_blueprint(tags.bp, url_prefix='/tags')
     app.register_blueprint(sodata.bp, url_prefix='/sodata')
     app.register_blueprint(canon.bp, url_prefix='/canon')
+    app.register_blueprint(salad.bp, url_prefix='/salad')
 
     return app
