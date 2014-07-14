@@ -4,7 +4,7 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}{{ item.title }}{% endblock %}</h2>
 
-        <ul>{% for tag in item.tags %}
+        <ul class="list-inline">{% for tag in item.tags %}
             <li>{{ tag.name }}</li>
         {% endfor %}</ul>
 

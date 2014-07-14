@@ -1,7 +1,7 @@
 from collections import Mapping
 from functools import wraps
 from flask import render_template, url_for, redirect
-import hoep
+import hoep as h
 from markupsafe import Markup
 
 
@@ -30,7 +30,11 @@ def redirect_for(endpoint, code=302, **values):
     return redirect(url_for(endpoint, **values), code)
 
 
-md = hoep.Hoep()
+md = h.Hoep(
+    h.EXT_AUTOLINK | h.EXT_FENCED_CODE | h.EXT_FOOTNOTES | h.EXT_HIGHLIGHT | h.EXT_SPACE_HEADERS | h.EXT_STRIKETHROUGH | h.EXT_SUPERSCRIPT | h.EXT_TABLES,
+    h.HTML_HARD_WRAP | h.HTML_SMARTYPANTS | h.HTML_TOC
+)
+#TODO: add code highlighting
 
 
 def markdown(text):
@@ -39,4 +43,3 @@ def markdown(text):
 
 def init_app(app):
     app.add_template_filter(markdown)
-
