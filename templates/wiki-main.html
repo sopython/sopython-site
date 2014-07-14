@@ -1,7 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-  <h1>wiki Guide and TOC</h1>
-<ul>
-    {% for page in pages %}<li><a href="/wiki/{{ page._id }}">{{ page.title }}</a></li>{% endfor %}
-</ul>
-{% endblock %}

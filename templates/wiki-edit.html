@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-
-{% block content %}
-<form action="/wiki/{{ path }}" method="POST" id="entry">
-<input size="50" type="text" name="title" value = "{{ title }}">
-<input type="submit">
-</form>
-<textarea style="width: 100%;" rows="80" name="body" form="entry">{{ body }}</textarea>
-{% endblock %}

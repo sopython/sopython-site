@@ -1,8 +1,0 @@
-{% extends "wiki-base.html" %}
-
-
-{% block content %}
-<h2>{{ title }}<span style="float: right; font-size:50%;">(last edit by {{ name }})</span></h2>
-<a href="http://sopython.com/wiki/{{ path }}?edit">edit</a>
-{{ body|safe }}
-{% endblock %}
