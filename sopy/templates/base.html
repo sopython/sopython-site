@@ -7,6 +7,7 @@
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}"/>
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/superhero/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}"
 </head>
 <body>
     <header>
@@ -33,9 +34,9 @@
 
     <main class="container">{% block content %}{% endblock %}</main>
 
-    <footer class="container">
+    <footer class="container"><div class="row"><div class="col-md-12">
         <p>Made by the cabbage addicts from the <a href="https://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="https://stackoverflow.com/">Stack Overflow</a>.</p>
-    </footer>
+    </div></div></footer>
 
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     {% block script %}{% endblock %}

@@ -12,15 +12,7 @@
 
         {% for item in items %}
             <article>
-                <h3>title</h3>
-
-                <ul class="list-inline pull-right">
-                    <li><a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a></li>
-                    <li><a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a></li>
-                </ul>
-
-                <div class="clearfix"></div>
-
+                <h3><a href="{{ item.detail_url }}">{{ item.title }}</a></h3>
                 {{ item.excerpt|markdown }}
             </article>
         {% endfor %}

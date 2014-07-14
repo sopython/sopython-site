@@ -24,7 +24,8 @@ def upgrade():
         'so_question',
         sa.Column('id', sa.Integer, primary_key=True, autoincrement=False),
         sa.Column('title', sa.String, nullable=False),
-        sa.Column('body', sa.String, nullable=False)
+        sa.Column('body', sa.String, nullable=False),
+        sa.Column('link', sa.String, nullable=False)
     )
     op.create_table(
         'so_question_tag',

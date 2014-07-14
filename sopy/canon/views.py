@@ -24,20 +24,18 @@ def detail(id):
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
-@bp.route('<int:id>/update', methods=['GET', 'POST'])
+@bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @template('canon/update.html')
 def update(id=None):
     item = CanonItem.query.get_or_404(id) if id is not None else None
-    form = CanonItemForm()
+    form = CanonItemForm(obj=item)
 
     if form.validate_on_submit():
         if item is None:
             item = CanonItem()
             db.session.add(item)
 
-        item.title = form.title.data
-        item.body = form.body.data
-
+        form.populate_obj(item)
         db.session.commit()
 
         return redirect(item.detail_url)

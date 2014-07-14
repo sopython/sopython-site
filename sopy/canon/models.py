@@ -1,4 +1,5 @@
 from flask import url_for
+from sqlalchemy.ext.associationproxy import association_proxy
 from sopy import db
 from sopy.ext.models import IDModel
 from sopy.sodata.models import SOQuestion
@@ -13,7 +14,8 @@ class CanonItem(HasTags, IDModel):
     def __str__(self):
         return self.title
 
-    questions = db.relationship(SOQuestion, lambda: canon_item_so_question)
+    questions = db.relationship(SOQuestion, lambda: canon_item_so_question, collection_class=set)
+    question_links = association_proxy('questions', 'link', creator=SOQuestion.so_load)
 
     @property
     def detail_url(self):

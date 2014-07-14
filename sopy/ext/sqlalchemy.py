@@ -1,4 +1,4 @@
-from flask import current_app
+from flask import current_app, g
 from flask_sqlalchemy import SQLAlchemy as BaseSQLAlchemy, _camelcase_re, _QueryProperty, BaseQuery
 from sqlalchemy import inspect
 from sqlalchemy.ext.declarative import DeclarativeMeta as BaseDeclarativeMeta, declared_attr, declarative_base
@@ -37,8 +37,7 @@ class UniqueMixin(object):
 
     @classmethod
     def get_unique(cls, **kwargs):
-        session = current_app.extensions['sqlalchemy'].db.session
-        session._unique_cache = cache = getattr(session, '_unique_cache', {})
+        g._unique_cache = cache = getattr(g, '_unique_cache', {})
         key = (cls, tuple(kwargs.items()))
         o = cache.get(key)
 
@@ -46,6 +45,8 @@ class UniqueMixin(object):
             o = None
 
         if o is None:
+            session = current_app.extensions['sqlalchemy'].db.session
+
             with session.no_autoflush:
                 o = session.query(cls).filter_by(**kwargs).first()
 

@@ -6,6 +6,14 @@ from markupsafe import Markup
 
 
 def template(path, **kwargs):
+    """Render a template if the decorated view returns a context dictionary.
+
+    If the view does not return a dictionary, the return value will be passed through.
+
+    :param path: template to render
+    :param kwargs: default context to pass to template, can be overridden by view context
+    :return: view decorator
+    """
     default_context = kwargs
 
     def decorator(func):
