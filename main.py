@@ -24,7 +24,7 @@ app.jinja_env.trim_blocks = True
 
 # auth
 oauthConfig = SimpleNamespace(id=app.config['OAUTH2_ID'], 
-			      secret=app.config['OAUTH2_SECRET', 
+			      secret=app.config['OAUTH2_SECRET'], 
 			      key=app.config['OAUTH2_KEY')
 oauthClient = sanction.Client(
 	auth_endpoint='https://stackexchange.com/oauth',
