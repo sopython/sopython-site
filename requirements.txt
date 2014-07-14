@@ -5,7 +5,7 @@ Flask>=0.11-dev
 Flask-Alembic==1.0.1
 Flask-SQLAlchemy==1.0
 Flask-WTF==0.9.5
-hoedown==0.2
+hoep==1.0.2
 itsdangerous==0.24
 Jinja2==2.7.3
 Mako==1.0.0

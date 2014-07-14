@@ -8,7 +8,7 @@
             <li>{{ tag.name }}</li>
         {% endfor %}</ul>
 
-        {{ item.body }}
+        {{ item.body|markdown }}
 
         <ul>{% for question in item.questions %}
             <li><a href="#">{{ question.title }}</a></li>

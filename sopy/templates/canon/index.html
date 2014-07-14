@@ -14,12 +14,6 @@
             <article>
                 <h3>title</h3>
 
-                <ul class="list-inline pull-left">
-                    {% for tag in item.tags %}
-                        <li>{{ tag.name }}</li>
-                    {% endfor %}
-                </ul>
-
                 <ul class="list-inline pull-right">
                     <li><a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a></li>
                     <li><a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a></li>
@@ -27,7 +21,7 @@
 
                 <div class="clearfix"></div>
 
-                {{ item.body }}
+                {{ item.excerpt|markdown }}
             </article>
         {% endfor %}
     </div></div>

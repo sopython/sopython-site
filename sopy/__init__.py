@@ -20,6 +20,10 @@ def create_app(info=None):
     alembic.init_app(app)
     db.init_app(app)
 
+    from sopy.ext import views
+
+    views.init_app(app)
+
     app.add_url_rule('/', 'index', lambda: render_template('index.html'))
 
     from sopy import tags, sodata, canon
