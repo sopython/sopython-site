@@ -9,3 +9,12 @@ Join us for chat in the `Python room`_!
 
 .. _Stack Overflow: https://stackoverflow.com/
 .. _Python room: https://chat.stackoverflow.com/rooms/6/python
+
+Develop
+-------
+
+::
+
+    git clone ssh://git@github.com/sopython/sopython-site sopy
+    pip install -e ./sopy
+    sopy --debug run -h localhost
