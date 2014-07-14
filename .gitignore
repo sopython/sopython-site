@@ -53,4 +53,4 @@ coverage.xml
 docs/_build/
 
 # sopython settings config files
-sopython_settings.cfg
+*.cfg

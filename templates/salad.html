@@ -8,7 +8,12 @@
 
   <h2 id="lexicon"><a href="#lexicon">Lexicon</a></h2>
   <dl class="salad">
-    <dt>Cabbage</dt>
+  {% for key, value in translation.items() %}
+    <dt>{{key}}</dt>
+    <dd>{{value}}</dd>
+  {% endfor %}
+
+  {#  <dt>Cabbage</dt>
     <dd>Hello</dd>
 
     <dt>Rhubarb</dt>
@@ -77,8 +82,9 @@
     <dt>Lettuce?</dt>
     <dd>What? / What do you mean?</dd>
 
-    <dt>Artichoke</dt>
+    <dt>Artichoke</dt>    
     <dd>Are you Joking? / Are you kidding? / Are you serious? / dafuq?</dd>
+   #}
   </dl>
 
   <h2 id="history"><a href="#history">History</a></h2>

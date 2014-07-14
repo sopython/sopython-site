@@ -15,6 +15,8 @@ cache = SimpleCache()
 
 import markdown
 
+from translation import translation
+
 app = Flask(__name__)
 app.config.from_envvar('SOPYTHON_SETTINGS')
 
@@ -48,7 +50,7 @@ def etiquette ():
 
 @app.route('/salad')
 def salad ():
-	return render_template('salad.html')
+	return render_template('salad.html', translation=translation)
 
 @app.route('/questions')
 def questions():
