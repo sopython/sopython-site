@@ -17,7 +17,8 @@
 
         {% if item.body %}
             {{ item.body|markdown }}
-        {% elif item.excerpt %}
+        {% endif %}
+        {% if item.excerpt %}
             {{ item.excerpt|markdown }}
         {% endif %}
 
