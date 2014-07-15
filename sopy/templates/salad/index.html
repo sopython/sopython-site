@@ -27,6 +27,8 @@
                     <td>{{ item.term }}</td>
                     <td>{{ item.definition }}</td>
                     <td>
+                        <a href="{{ item.move_up_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-up"></i></a>
+                        <a href="{{ item.move_down_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-down"></i></a>
                         <a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a>
                         <a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a>
                     </td>
