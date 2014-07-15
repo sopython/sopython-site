@@ -40,3 +40,8 @@ def create_app(info=None):
         return {'wod': Salad.word_of_the_day()}
 
     return app
+
+if __name__ == '__main__':
+    app = create_app()
+
+    app.run(debug=True)
