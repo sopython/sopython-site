@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import request
 from flask_wtf import Form
 from sopy import db
 from sopy.ext.views import template, redirect_for
@@ -11,8 +11,10 @@ from sopy.salad.models import Salad
 @template('salad/index.html')
 def index():
     items = Salad.query.order_by(Salad.position).all()
+    wod = Salad.word_of_the_day()
+    highlight = request.args.get('highlight', '')
 
-    return {'items': items}
+    return {'items': items, 'wod': wod, 'highlight': highlight}
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])

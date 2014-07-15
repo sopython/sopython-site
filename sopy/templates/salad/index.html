@@ -19,14 +19,15 @@
                 <tr>
                     <th>Term</th>
                     <th>Definition</th>
-                    <th class="col-md-2"></th>
+                    <th class="col-md-3"></th>
                 </tr>
             </thead>
             <tbody>{% for item in items %}
                 <tr>
-                    <td>{{ item.term }}</td>
+                    <td{% if item.term == highlight %} class="info"{% endif %}>{% if item == wod %}<i class="fa fa-star" title="Word of the Day"></i> {% endif %}{{ item.term }}</td>
                     <td>{{ item.definition }}</td>
                     <td>
+                        <a href="{{ item.highlight_url }}" class="btn btn-default btn-xs"><i class="fa fa-link"></i></a>
                         <a href="{{ item.move_up_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-up"></i></a>
                         <a href="{{ item.move_down_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-down"></i></a>
                         <a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a>

@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import url_for
 from sopy import db
 from sopy.ext.models import IDModel
@@ -13,6 +14,22 @@ class Salad(IDModel):
 
     def compare_value(self):
         return self.term
+
+    @classmethod
+    def word_of_the_day(cls, ts=None):
+        """Cycle through all words, picking a different one each day.
+
+        Take the number of days since the epoch modulo the total number of items.  Order all words by primary id, and pick the calculated item.
+
+        :param ts: get word for this datetime, or None for now
+        :return: instance
+        """
+        if ts is None:
+            ts = datetime.utcnow()
+
+        num = (ts - datetime(1970, 1, 1)).days % db.session.query(db.func.count(cls.id)).scalar()
+
+        return cls.query.order_by(cls.id)[num]
 
     def move_up(self):
         above = Salad.query.filter(Salad.position == self.position - 1).first()
@@ -51,3 +68,7 @@ class Salad(IDModel):
     @property
     def delete_url(self):
         return url_for('salad.delete', id=self.id)
+
+    @property
+    def highlight_url(self):
+        return url_for('salad.index', highlight=self.term)

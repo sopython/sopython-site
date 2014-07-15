@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from sopy.ext.sqlalchemy import SQLAlchemy
+from sopy.ext.views import template
 
 alembic = Alembic()
 db = SQLAlchemy()
@@ -24,13 +25,18 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    app.add_url_rule('/', 'index', lambda: render_template('index.html'))
-
     from sopy import tags, sodata, canon, salad
 
     app.register_blueprint(tags.bp, url_prefix='/tags')
     app.register_blueprint(sodata.bp, url_prefix='/sodata')
     app.register_blueprint(canon.bp, url_prefix='/canon')
     app.register_blueprint(salad.bp, url_prefix='/salad')
+
+    from sopy.salad.models import Salad
+
+    @app.route('/')
+    @template('index.html')
+    def index():
+        return {'wod': Salad.word_of_the_day()}
 
     return app
