@@ -17,13 +17,12 @@
 
         {% if item.body %}
             {{ item.body|markdown }}
-        {% endif %}
-        {% if item.excerpt %}
+        {% elif item.excerpt %}
             {{ item.excerpt|markdown }}
         {% endif %}
 
         <ul>{% for question in item.questions %}
-            <li><a href="{{ question.link }}">{{ question.title }}</a></li>
+            <li><a href="{{ question.link }}">{{ question.title|safe }}</a></li>
         {% endfor %}</ul>
     </div></div>
 {% endblock %}

@@ -13,7 +13,7 @@
         {% for item in items %}
             <article>
                 <h3><a href="{{ item.detail_url }}">{{ item.title }}</a></h3>
-                {{ item.excerpt|markdown }}
+                {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
             </article>
         {% endfor %}
     </div></div>
