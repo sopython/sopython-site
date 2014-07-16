@@ -10,8 +10,8 @@
             <p>Join us for chat in the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a>!</p>
         </div>
 
-        <div class="panel panel-info">
+        {% if wod %}<div class="panel panel-info">
             <div class="panel-body">The word of the day is "<a href="{{ wod.highlight_url }}"><strong>{{ wod.term }}</strong></a>"!</div>
-        </div>
+        </div>{% endif %}
     </div></div>
 {% endblock %}

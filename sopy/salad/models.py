@@ -27,7 +27,12 @@ class Salad(IDModel):
         if ts is None:
             ts = datetime.utcnow()
 
-        num = (ts - datetime(1970, 1, 1)).days % db.session.query(db.func.count(cls.id)).scalar()
+        count = db.session.query(db.func.count(cls.id)).scalar()
+
+        if not count:
+            return None
+
+        num = (ts - datetime(1970, 1, 1)).days % count
 
         return cls.query.order_by(cls.id)[num]
 

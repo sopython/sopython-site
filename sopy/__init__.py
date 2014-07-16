@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from sopy.ext.sqlalchemy import SQLAlchemy
