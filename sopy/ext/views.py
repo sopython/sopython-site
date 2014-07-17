@@ -129,3 +129,6 @@ def markdown(text):
 
 def init_app(app):
     app.add_template_filter(markdown)
+
+
+#TODO id_slug route processor accespts id/slug, ignores slug if not present

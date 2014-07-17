@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
+from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
 from sopy.ext.views import template
 
 alembic = Alembic()
+babel = Babel()
 db = SQLAlchemy()
 
 
@@ -19,18 +21,20 @@ def create_app(info=None):
     app.jinja_env.lstrip_blocks = True
 
     alembic.init_app(app)
+    babel.init_app(app)
     db.init_app(app)
 
     from sopy.ext import views
 
     views.init_app(app)
 
-    from sopy import tags, sodata, canon, salad
+    from sopy import tags, sodata, canon, salad, wiki
 
     app.register_blueprint(tags.bp, url_prefix='/tags')
     app.register_blueprint(sodata.bp, url_prefix='/sodata')
     app.register_blueprint(canon.bp, url_prefix='/canon')
     app.register_blueprint(salad.bp, url_prefix='/salad')
+    app.register_blueprint(wiki.bp, url_prefix='/wiki')
 
     from sopy.salad.models import Salad
 
