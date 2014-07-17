@@ -117,3 +117,6 @@ Temporary Items
 
 # Manually added src/ due to Flask installation.
 src/*
+
+# Manually add venv
+venv/*
