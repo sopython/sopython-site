@@ -1,0 +1,17 @@
+{% extends 'wiki/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Contents{% endblock %}</h2>
+
+        <ul class="list-inline pull-right">
+            <li><a href="{{ url_for('wiki.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Wiki Page</a></li>
+        </ul>
+
+        <div class="clearfix"></div>
+
+        <ul>{% for page in pages %}
+            <li><a href="{{ page.detail_url }}">{{ page.title }}</a></li>
+        {% endfor %}</ul>
+    </div></div>
+{% endblock %}

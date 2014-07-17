@@ -15,7 +15,8 @@ down_revision = '2fe56c1c437'
 
 
 def upgrade():
-    op.create_table('salad',
+    op.create_table(
+        'salad',
         sa.Column('id', sa.Integer, primary_key=True),
         sa.Column('term', sa.String, nullable=False, unique=True),
         sa.Column('definition', sa.String, nullable=False)
