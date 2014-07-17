@@ -35,6 +35,7 @@ def create_app(info=None):
     app.register_blueprint(canon.bp, url_prefix='/canon')
     app.register_blueprint(salad.bp, url_prefix='/salad')
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
+    # app.register_blueprint(chatroom.bp, url_prefix='/chatroom')
 
     from sopy.salad.models import Salad
 
@@ -42,5 +43,10 @@ def create_app(info=None):
     @template('index.html')
     def index():
         return {'wod': Salad.word_of_the_day()}
+
+    @app.route('/chatroom')
+    @template('chatroom.html')
+    def chatroom():
+        return {}
 
     return app

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block nav_salad %}active{% endblock %}
+
+{% block content %}
+{#    <div class="row"><div class="col-md-12">#}
+{#        <h2 class="page-header">{% block title %}Common Questions{% endblock %}</h2>#}
+{##}
+{#        <ul class="list-inline pull-right">#}
+{#            <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>#}
+{#        </ul>#}
+{##}
+{#        <div class="clearfix"></div>#}
+{##}
+{#        {% for item in items %}#}
+{#            <article>#}
+{#                <h3><a href="{{ item.detail_url }}">{{ item.title }}</a></h3>#}
+{#                {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}#}
+{#            </article>#}
+{#        {% endfor %}#}
+{#    </div></div>#}
+{% endblock %}
