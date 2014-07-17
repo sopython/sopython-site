@@ -2,12 +2,23 @@ from flask import Flask
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
+from flask_oauthlib.client import OAuth
 from sopy.ext.sqlalchemy import SQLAlchemy
 from sopy.ext.views import template
 
 alembic = Alembic()
 babel = Babel()
 db = SQLAlchemy()
+oauth = OAuth()
+
+oauth_so = oauth.remote_app(
+    'Stack Exchange',
+    authorize_url='https://stackexchange.com/oauth',
+    access_token_url='https://stackexchange.com/oauth/access_token',
+    access_token_method='POST',
+    base_url='https://api.stackexchange.com/2.2/',
+    app_key='OAUTH_SO'
+)
 
 
 def create_app(info=None):
