@@ -1,0 +1,76 @@
+{% extends 'chatroom/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+
+    <h2 class="page-header">{% block title %}Chatroom{% endblock %}</h2>
+
+    <p class="lead">The heart of the <b>so</b>python community is the
+        <a href="http://chat.stackoverflow.com/rooms/6/python">Stack Overflow Python chatroom.</a></p>
+
+    <p>We are an active and friendly room full of Python experts and beginners who all share a common love for the language.
+       Whether you're a veteran Pythonista or looking to start learning the language you're more than welcome to join us.
+       As with any community we have our own set of rules and etiquette which are set out below, please be considerate and
+       take the time to read them.
+    </p>
+
+    <p><em>Incidentally, if you've just been greeted with the word "cbg" or "cabbage" then
+       you may want to <a href="{{ url_for('salad.index') }}">have a look here...</a></em>
+    </p>
+
+
+    <h2>Rules</h2>
+
+    <ol>
+        <li><a href="http://chat.stackoverflow.com/faq#nice">Be nice.</a></li>
+        <li>If nobody responds to your question, that means no-one in the room is able to help (either because they don't know,
+            or are too busy to answer right now). Please don't spam the room with further requests for help on the same question.
+            It will only annoy people and make them less likely to want to help you in future.</li>
+        <li>Especially don't use <code>@username</code> notification unless that user has already told you it's okay to ping them; <em>that's like
+            jabbing someone in the shoulder and saying "Hey! Answer me!"</em>, and will quickly mark you out as someone to be avoided.</li>
+        <li>However it is acceptable (and encouraged) to <code>@username</code> people where it assists in the flow of existing conversations.</li>
+        <li>Cute fluffy animals (especially kittens and puppies) are cool, okay!?</li>
+    </ol>
+
+    <h3>Posting Question/Answer Links</h3>
+
+    <ol>
+        <li>Do not link your recently posted questions in the room. The main site is the dedicated space for posting questions,
+            and having them answered.</li>
+        <li>If you have posted a question on the main site and a significant amount of time has passed without receiving a
+            satisfying answer, then you can discuss your question in the room.</li>
+        <li>You should never simply link your question into the chat room without staying to discuss it and should usually
+            only link it when having been asked by others.</li>
+        <li>Note - linking questions which are not your own recently posted questions is alright as long as it serves a
+            purpose, and you are willing to discuss answering it, or are suggesting it be closed.</li>
+    </ol>
+
+    <h3>Asking a question</h3>
+    <ol>
+      <li>You do not need to ask if it’s okay to ask a question.</li>
+      <li>You may ask your question without a preamble.<br />
+        For example, you do not need to say “anyone here know Django?” before asking a question about Django. Even if you
+        do, the Django experts in the room might not step forward until hearing the actual question. They may not wish
+        to commit themselves to help until they know how much effort it will entail.</li>
+      <li>Only paste code directly into chat if it is not very long.<br />
+        There is no hard limit, but about a dozen lines is acceptable. For longer code, use an external paste tool such
+        as <a href="http://dpaste.org/">dpaste</a>.</li>
+      <li>Double check that your code is properly formatted.<br />
+        For a multi-line post to retain its indentation, every line (including empty lines) must be preceded with four
+        spaces. Paste your text and indent it with <kbd>Ctrl+K</kbd>. Alternatively, press the <em>“fixed font”</em>
+        button that appears next to <em>“send”</em> and <em>“upload”</em> when your post is more than one line long.</li>
+      <li>Don’t star posts to reward users for answering your question.<br />
+        For most users, your gratitude is reward enough. Alternatively, if your question meets StackOverflow’s standards,
+        you may post your question there, and invite the answerer to make a reply which you may accept.</li>
+    </ol>
+
+    <h3>Contact Us</h3>
+
+    <p>We believe that the Python chatroom to be a <a href="https://www.python.org/psf/diversity/">friendly and welcoming place</a>.
+       If any behaviour in the room makes you feel uncomfortable, you can @notify one of the owners and we'll do our best to sort it out.</p>
+    <p>If you wish to contact the sopython room owners you can also feel free to drop us an
+        <a href="mailto:chatroom@sopython.com">email</a>.</p>
+
+    </div></div>
+
+{% endblock %}
