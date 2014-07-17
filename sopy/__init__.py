@@ -28,7 +28,7 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    from sopy import tags, sodata, canon, salad, wiki, chatroom
+    from sopy import tags, sodata, canon, salad, wiki, chatroom, nidaba
 
     app.register_blueprint(tags.bp, url_prefix='/tags')
     app.register_blueprint(sodata.bp, url_prefix='/sodata')
@@ -36,6 +36,8 @@ def create_app(info=None):
     app.register_blueprint(salad.bp, url_prefix='/salad')
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
     app.register_blueprint(chatroom.bp, url_prefix='/chatroom')
+    app.register_blueprint(nidaba.bp, url_prefix='/nidaba')
+
 
     from sopy.salad.models import Salad
 
