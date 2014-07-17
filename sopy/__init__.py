@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
+from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
 from sopy.ext.views import template
 
 alembic = Alembic()
+babel = Babel()
 db = SQLAlchemy()
 
 
@@ -19,6 +21,7 @@ def create_app(info=None):
     app.jinja_env.lstrip_blocks = True
 
     alembic.init_app(app)
+    babel.init_app(app)
     db.init_app(app)
 
     from sopy.ext import views
