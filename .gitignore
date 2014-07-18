@@ -115,8 +115,8 @@ Icon
 Network Trash Folder
 Temporary Items
 
-# Manually added src/ due to Flask installation.
-src/*
+# Project specific
 
-# Manually add venv
-venv/*
+src/
+venv/
+instance/
