@@ -2,7 +2,7 @@ import re
 import requests
 from sopy import db
 from sopy.ext.models import ExternalIDModel
-from sopy.tags.models import HasTags, Tag
+from sopy.tags.models import HasTags
 
 #TODO: use an api key
 

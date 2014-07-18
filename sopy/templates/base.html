@@ -26,8 +26,9 @@
                         <li class="{% block nav_nidaba %}{% endblock %}"><a href="{{ url_for('pages.page', name='nidaba') }}">Nidaba</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="{% block nav_user %}{% endblock %}"><a href="#">User</a></li>
-                        <li><a href="#">Log Out</a></li>
+                        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                        {#<li class="{% block nav_user %}{% endblock %}"><a href="#">User</a></li>
+                        <li><a href="#">Log Out</a></li>#}
                     </ul>
                 </div>
             </div>
