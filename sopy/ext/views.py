@@ -10,8 +10,10 @@ from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 
 
-def template(path, **kwargs):
+def template(path=None, **default_context):
     """Render a template if the decorated view returns a context dictionary.
+
+    If the returned context includes the key '_template', that value is used as the template path.
 
     If the view does not return a dictionary, the return value will be passed through.
 
@@ -19,8 +21,6 @@ def template(path, **kwargs):
     :param kwargs: default context to pass to template, can be overridden by view context
     :return: view decorator
     """
-    default_context = kwargs
-
     def decorator(func):
         @wraps(func)
         def inner(*args, **kwargs):
@@ -32,7 +32,12 @@ def template(path, **kwargs):
             context = default_context.copy()
             context.update(result)
 
-            return render_template(path, **context)
+            template_path = context.pop('_template', path)
+
+            if template_path is None:
+                raise KeyError('No default template provided, and no template passed in context.')
+
+            return render_template(template_path, **context)
 
         return inner
 

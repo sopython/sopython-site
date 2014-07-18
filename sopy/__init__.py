@@ -39,16 +39,14 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    from sopy import tags, sodata, canon, salad, wiki, chatroom, nidaba
+    from sopy import tags, sodata, canon, salad, wiki, pages
 
     app.register_blueprint(tags.bp, url_prefix='/tags')
     app.register_blueprint(sodata.bp, url_prefix='/sodata')
     app.register_blueprint(canon.bp, url_prefix='/canon')
     app.register_blueprint(salad.bp, url_prefix='/salad')
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
-    app.register_blueprint(chatroom.bp, url_prefix='/chatroom')
-    app.register_blueprint(nidaba.bp, url_prefix='/nidaba')
-
+    app.register_blueprint(pages.bp, url_prefix='/pages')
 
     from sopy.salad.models import Salad
 
@@ -56,6 +54,5 @@ def create_app(info=None):
     @template('index.html')
     def index():
         return {'wod': Salad.word_of_the_day()}
-
 
     return app
