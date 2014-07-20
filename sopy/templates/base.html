@@ -64,6 +64,9 @@
 
                 var editor = ace.edit(div[0]);
                 var session = editor.getSession();
+
+                editor.setTheme("ace/theme/github");
+
                 session.setValue(textarea.val());
                 session.setMode('ace/mode/' + mode);
                 session.setNewLineMode('unix');
