@@ -4,7 +4,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sopy import db
 from sopy.auth.login import UserMixin
 from sopy.ext.models import IDModel
-from sopy.sodata.models import SOUser
+from sopy.se_data.models import SEUser
 
 
 class Group(IDModel):
@@ -26,10 +26,10 @@ class Group(IDModel):
         return super(Group, self).get_unique(name=name, **kwargs)
 
 
-class User(UserMixin, SOUser):
+class User(UserMixin, SEUser):
     __tablename__ = 'user'
 
-    id = db.Column(db.Integer, db.ForeignKey(SOUser.id), primary_key=True)
+    id = db.Column(db.Integer, db.ForeignKey(SEUser.id), primary_key=True)
     superuser = db.Column(db.Boolean, nullable=False, default=False)
 
     _groups = db.relationship(Group, lambda: user_group, collection_class=set, backref=db.backref('users', collection_class=set))
@@ -58,7 +58,7 @@ class User(UserMixin, SOUser):
 
         o = cls.get_unique(id=data['user_id'])
 
-        return o.so_update(data)
+        return o.se_update(data)
 
 
 user_group = db.Table(

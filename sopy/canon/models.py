@@ -2,7 +2,7 @@ from flask import url_for
 from sqlalchemy.ext.associationproxy import association_proxy
 from sopy import db
 from sopy.ext.models import IDModel
-from sopy.sodata.models import SOQuestion
+from sopy.se_data.models import SEQuestion
 from sopy.tags.models import HasTags
 
 
@@ -14,8 +14,8 @@ class CanonItem(HasTags, IDModel):
     def __str__(self):
         return self.title
 
-    questions = db.relationship(SOQuestion, lambda: canon_item_so_question, collection_class=set)
-    question_links = association_proxy('questions', 'link', creator=SOQuestion.so_load)
+    questions = db.relationship(SEQuestion, lambda: canon_item_se_question, collection_class=set)
+    question_links = association_proxy('questions', 'link', creator=SEQuestion.se_load)
 
     @property
     def detail_url(self):
@@ -30,8 +30,8 @@ class CanonItem(HasTags, IDModel):
         return url_for('canon.delete', id=self.id)
 
 
-canon_item_so_question = db.Table(
-    'canon_item_so_question',
+canon_item_se_question = db.Table(
+    'canon_item_se_question',
     db.Column('canon_item_id', db.Integer, db.ForeignKey(CanonItem.id), primary_key=True),
-    db.Column('so_question_id', db.Integer, db.ForeignKey(SOQuestion.id), primary_key=True)
+    db.Column('se_question_id', db.Integer, db.ForeignKey(SEQuestion.id), primary_key=True)
 )

@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
@@ -28,11 +28,11 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    from sopy import auth, tags, sodata, canon, salad, wiki, pages
+    from sopy import auth, tags, se_data, canon, salad, wiki, pages
 
     app.register_blueprint(auth.bp, url_prefix='/auth')
     app.register_blueprint(tags.bp, url_prefix='/tags')
-    app.register_blueprint(sodata.bp, url_prefix='/sodata')
+    app.register_blueprint(se_data.bp, url_prefix='/se_data')
     app.register_blueprint(canon.bp, url_prefix='/canon')
     app.register_blueprint(salad.bp, url_prefix='/salad')
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
