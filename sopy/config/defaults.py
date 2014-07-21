@@ -9,6 +9,9 @@ ALEMBIC_CONTEXT = {
     'user_module_prefix': 'user',
 }
 
-# OAUTH_SO_API_KEY = ''
-# OAUTH_SO_CONSUMER_KEY = ''
-# OAUTH_SO_CONSUMER_SECRET = ''
+# Set the following in <app.instance_path>/config.py
+# On dev that's <project>/instance/config.py
+# On prod that's <env>/var/sopy-instance/config.py
+# SE_API_KEY = ''
+# SE_CONSUMER_KEY = ''
+# SE_CONSUMER_SECRET = ''
