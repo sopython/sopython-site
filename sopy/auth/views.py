@@ -5,14 +5,14 @@ from sopy import db
 from sopy.auth import bp
 from sopy.auth.login import login_user, logout_user
 from sopy.auth.models import User
-from sopy.ext.views import redirect_for
+from sopy.ext.views import redirect_for, redirect_next
 
 
 @bp.route('/login')
 def login():
     qs = urlencode({
         'client_id': current_app.config['SE_CONSUMER_KEY'],
-        'redirect_uri': url_for('auth.authorized', _external=True)
+        'redirect_uri': url_for('auth.authorized', next=request.args.get('next'), _external=True)
     })
     url = 'https://stackexchange.com/oauth?{}'.format(qs)
 
@@ -25,14 +25,14 @@ def authorized():
         'client_id': current_app.config['SE_CONSUMER_KEY'],
         'client_secret': current_app.config['SE_CONSUMER_SECRET'],
         'code': request.args['code'],
-        'redirect_uri': url_for('auth.authorized', _external=True)
+        'redirect_uri': url_for('auth.authorized', next=request.args.get('next'), _external=True)
     })
 
     session['oauth_token'] = parse_qs(r.text)['access_token'][0]
     login_user(User.oauth_load())
     db.session.commit()
 
-    return redirect_for('index')
+    return redirect_next()
 
 
 @bp.route('/logout')

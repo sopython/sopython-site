@@ -107,10 +107,16 @@ def login_required(func):
 
 
 def group_required(group):
-    """Redirect to the login page if the current user is not in the group."""
+    """Redirect to the login page if the current user is not in the group.
+
+    If they are logged in but don't have permission, don't try to log in, it will result in an infinite loop.
+    """
     def decorator(func):
         @wraps(func)
         def check_auth(*args, **kwargs):
+            if current_user.authenticated:
+                return redirect_for('index')
+
             if not current_user.has_group(group):
                 return redirect_for('auth.login', next=request.path)
 
