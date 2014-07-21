@@ -1,6 +1,7 @@
 from flask import redirect
 from flask_wtf import Form
 from sopy import db
+from sopy.auth.login import group_required
 from sopy.ext.views import template, redirect_for
 from sopy.wiki import bp
 from sopy.wiki.forms import WikiPageForm
@@ -26,6 +27,7 @@ def detail(id):
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @template('wiki/update.html')
+@group_required('approved')
 def update(id=None):
     page = WikiPage.query.get_or_404(id) if id is not None else None
     form = WikiPageForm(obj=page)
@@ -46,6 +48,7 @@ def update(id=None):
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
 @template('wiki/delete.html')
+@group_required('approved')
 def delete(id):
     page = WikiPage.query.get_or_404(id)
     form = Form()

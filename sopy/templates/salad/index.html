@@ -8,9 +8,9 @@
 
         <h3>Lexicon</h3>
 
-        <ul class="list-inline pull-right">
+        {% if has_group('approved') %}<ul class="list-inline pull-right">
             <li><a href="{{ url_for('salad.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Salad Term</a></li>
-        </ul>
+        </ul>{% endif %}
 
         <div class="clearfix"></div>
 
@@ -28,10 +28,10 @@
                     <td>{{ item.definition }}</td>
                     <td>
                         <a href="{{ item.highlight_url }}" class="btn btn-default btn-xs"><i class="fa fa-link"></i></a>
-                        <a href="{{ item.move_up_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-up"></i></a>
+                        {% if has_group('approved') %}<a href="{{ item.move_up_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-up"></i></a>
                         <a href="{{ item.move_down_url }}" class="btn btn-default btn-xs"><i class="fa fa-arrow-down"></i></a>
                         <a href="{{ item.update_url }}" class="btn btn-success btn-xs"><i class="fa fa-edit"></i> Edit</a>
-                        <a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a>
+                        <a href="{{ item.delete_url }}" class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Remove</a>{% endif %}
                     </td>
                 </tr>
             {% endfor %}</tbody>

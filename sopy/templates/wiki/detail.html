@@ -4,11 +4,11 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}{{ page.title }}{% endblock %}</h2>
 
-        <ul class="list-inline pull-right">
+        {% if has_group('approved') %}<ul class="list-inline pull-right">
             <li><small><i>Last edited {{ page.updated|datetimeformat }}</i></small></li>
             <li><a href="{{ page.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>
             <li><a href="{{ page.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>
-        </ul>
+        </ul>{% endif %}
 
         <div class="clearfix"></div>
 

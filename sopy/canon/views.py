@@ -1,6 +1,7 @@
 from flask import redirect
 from flask_wtf import Form
 from sopy import db
+from sopy.auth.login import group_required
 from sopy.canon import bp
 from sopy.canon.forms import CanonItemForm
 from sopy.canon.models import CanonItem
@@ -26,6 +27,7 @@ def detail(id):
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @template('canon/update.html')
+@group_required('approved')
 def update(id=None):
     item = CanonItem.query.get_or_404(id) if id is not None else None
     form = CanonItemForm(obj=item)
@@ -45,6 +47,7 @@ def update(id=None):
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
 @template('canon/delete.html')
+@group_required('approved')
 def delete(id):
     item = CanonItem.query.get_or_404(id)
     form = Form()
