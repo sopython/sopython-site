@@ -26,9 +26,12 @@
                         <li class="{% block nav_nidaba %}{% endblock %}"><a href="{{ url_for('pages.page', name='nidaba') }}">Nidaba</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
-                        {#<li class="{% block nav_user %}{% endblock %}"><a href="#">User</a></li>
-                        <li><a href="#">Log Out</a></li>#}
+                        {% if current_user.anonymous %}
+                            <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+                        {% else %}
+                            <li class="{% block nav_user %}{% endblock %}"><a href="#">{{ current_user.display_name }}</a></li>
+                            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                        {% endif %}
                     </ul>
                 </div>
             </div>

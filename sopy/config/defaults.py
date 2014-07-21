@@ -9,6 +9,6 @@ ALEMBIC_CONTEXT = {
     'user_module_prefix': 'user',
 }
 
-# OAUTH_SO_APPLICATION_ID = ''
+# OAUTH_SO_API_KEY = ''
 # OAUTH_SO_CONSUMER_KEY = ''
 # OAUTH_SO_CONSUMER_SECRET = ''

@@ -1,18 +1,52 @@
 import re
+from flask import current_app
 import requests
 from sopy import db
 from sopy.ext.models import ExternalIDModel
 from sopy.tags.models import HasTags
 
-#TODO: use an api key
+users_url = 'https://api.stackexchange.com/2.2/users/{}'
+user_id_re = re.compile(r'/u(?:sers)?/([0-9]+)')
+
+
+class SOUser(ExternalIDModel):
+    display_name = db.Column(db.String, nullable=False)
+
+    def __str__(self):
+        return self.display_name
+
+    @classmethod
+    def so_load(cls, ident):
+        try:
+            id = int(ident)
+        except ValueError:
+            match = user_id_re.search(ident)
+            id = int(match.group(1))
+
+        o = cls.get_unique(id=id)
+        r = requests.get(users_url.format(id), params={
+            'key': current_app.config['SE_API_KEY'],
+            'site': 'stackoverflow',
+        })
+        data = r.json()['items'][0]
+
+        return o.so_update(data)
+
+    def so_update(self, data=None):
+        if data is None:
+            r = requests.get(users_url.format(self.id), params={
+                'key': current_app.config['SE_API_KEY'],
+                'site': 'stackoverflow',
+            })
+            data = r.json()['items'][0]
+
+        self.display_name = data['display_name']
+
+        return self
+
 
 questions_url = 'https://api.stackexchange.com/2.2/questions/{}'
-questions_params = {
-    'site': 'stackoverflow',
-    'filter': '!5RCKN561Hrx5Mj7Pc*qRTOUCj',
-}
-
-question_id_re = re.compile(r'stackoverflow\.com/q(?:uestions)?/([0-9]+)')
+question_id_re = re.compile(r'/q(?:uestions)?/([0-9]+)')
 
 
 class SOQuestion(HasTags, ExternalIDModel):
@@ -36,12 +70,16 @@ class SOQuestion(HasTags, ExternalIDModel):
             id = int(match.group(1))
 
         o = cls.get_unique(id=id)
-        r = requests.get(questions_url.format(id), params=questions_params)
-        items = r.json()['items']
+        r = requests.get(questions_url.format(id), params={
+            'key': current_app.config['SE_API_KEY'],
+            'site': 'stackoverflow',
+            'filter': '!5RCKN561Hrx5Mj7Pc*qRTOUCj',
+        })
+        data = r.json()['items'][0]
 
         #TODO: error checking
 
-        return o.so_update(items[0])
+        return o.so_update(data)
 
     def so_update(self, data=None):
         """Update question based on latest SO data.
@@ -50,7 +88,11 @@ class SOQuestion(HasTags, ExternalIDModel):
         :return: updated instance
         """
         if data is None:
-            r = requests.get(questions_url.format(self.id), params=questions_params)
+            r = requests.get(questions_url.format(self.id), params={
+                'key': current_app.config['SE_API_KEY'],
+                'site': 'stackoverflow',
+                'filter': '!5RCKN561Hrx5Mj7Pc*qRTOUCj',
+            })
             data = r.json()['items'][0]
 
         self.title = data['title']
