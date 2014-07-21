@@ -1,4 +1,4 @@
-include AUTHORS.rst LICENSE.rst
+include requirements.txt AUTHORS.rst LICENSE.rst
 recursive-include sopy/migrations *.py
 graft sopy/static
 graft sopy/templates
