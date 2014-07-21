@@ -9,6 +9,7 @@
         <form method="post">
             {{ form.hidden_tag() }}
             <button type="submit" class="btn btn-danger"><i class="fa fa-minus"></i> Remove</button>
+            <a href="{{ url_for('salad.index') }}" class="btn btn-default">Cancel</a>
         </form>
     </div></div>
 {% endblock %}
