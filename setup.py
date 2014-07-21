@@ -6,8 +6,9 @@ with open('requirements.txt') as f:
 
 setup(
     name='sopy',
-    version='1.0.0',
+    version='1.0-dev',
     packages=find_packages(),
+    include_package_data=True,
     url='http://sopython.com/',
     license='BSD',
     author='David Lord',
