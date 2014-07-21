@@ -1,7 +1,7 @@
 from flask import request
 from flask_wtf import Form
 from sopy import db
-from sopy.auth.login import group_required
+from sopy.auth.login import group_required, current_user
 from sopy.ext.views import template, redirect_for
 from sopy.salad import bp
 from sopy.salad.forms import SaladForm
@@ -32,6 +32,7 @@ def update(id=None):
             db.session.add(item)
 
         form.populate_obj(item)
+        item.updated_by = current_user
         db.session.commit()
 
         return redirect_for('salad.index')

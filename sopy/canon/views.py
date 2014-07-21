@@ -1,7 +1,7 @@
 from flask import redirect
 from flask_wtf import Form
 from sopy import db
-from sopy.auth.login import group_required
+from sopy.auth.login import group_required, current_user
 from sopy.canon import bp
 from sopy.canon.forms import CanonItemForm
 from sopy.canon.models import CanonItem
@@ -38,6 +38,7 @@ def update(id=None):
             db.session.add(item)
 
         form.populate_obj(item)
+        item.updated_by = current_user
         db.session.commit()
 
         return redirect(item.detail_url)

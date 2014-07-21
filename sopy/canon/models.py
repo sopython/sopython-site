@@ -1,6 +1,7 @@
 from flask import url_for
 from sqlalchemy.ext.associationproxy import association_proxy
 from sopy import db
+from sopy.auth.models import User
 from sopy.ext.models import IDModel
 from sopy.se_data.models import SEQuestion
 from sopy.tags.models import HasTags
@@ -10,6 +11,9 @@ class CanonItem(HasTags, IDModel):
     title = db.Column(db.String, nullable=False)
     excerpt = db.Column(db.String, nullable=False, default='')
     body = db.Column(db.String, nullable=False, default='')
+    updated_by_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+
+    updated_by = db.relationship(User)
 
     def __str__(self):
         return self.title

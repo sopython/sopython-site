@@ -11,13 +11,20 @@ revision = '3171252a864'
 down_revision = '5044846b1bc'
 
 from alembic import op
+from flask_sqlalchemy import _SessionSignalEvents
 import sqlalchemy as sa
+from sqlalchemy import event, exc
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import Session
 
+try:
+    event.remove(Session, 'before_commit', _SessionSignalEvents.session_signal_before_commit)
+    event.remove(Session, 'after_commit', _SessionSignalEvents.session_signal_after_commit)
+    event.remove(Session, 'after_rollback', _SessionSignalEvents.session_signal_after_rollback)
+except exc.InvalidRequestError:
+    pass
 
 Base = declarative_base()
-Session = sessionmaker()
 
 
 class Salad(Base):
@@ -32,7 +39,6 @@ def upgrade():
     op.add_column('salad', sa.Column('position', sa.Integer))
 
     session = Session(bind=op.get_bind())
-    session._model_changes = False
 
     for i, item in enumerate(session.query(Salad).order_by(Salad.term)):
         item.position = i

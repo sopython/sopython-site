@@ -22,8 +22,9 @@ class Group(IDModel):
     def compare_value(self):
         return self.name
 
-    def get_unique(self, name, **kwargs):
-        return super(Group, self).get_unique(name=name, **kwargs)
+    @classmethod
+    def get_unique(cls, name, **kwargs):
+        return super(Group, cls).get_unique(name=name, **kwargs)
 
 
 class User(UserMixin, SEUser):

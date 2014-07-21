@@ -1,7 +1,7 @@
 from flask import redirect
 from flask_wtf import Form
 from sopy import db
-from sopy.auth.login import group_required
+from sopy.auth.login import group_required, current_user
 from sopy.ext.views import template, redirect_for
 from sopy.wiki import bp
 from sopy.wiki.forms import WikiPageForm
@@ -38,6 +38,7 @@ def update(id=None):
             db.session.add(page)
 
         form.populate_obj(page)
+        page.author = current_user
         db.session.commit()
 
         return redirect(page.detail_url)

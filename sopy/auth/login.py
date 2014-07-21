@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, g, request
+from flask import session, g, request, has_request_context
 from werkzeug.local import LocalProxy
 from sopy import db
 from sopy.auth import bp
@@ -37,14 +37,18 @@ def login_user(user):
 
     :param user: user instance to log in
     """
-    session['user_id'] = user.id
+    if has_request_context():
+        session['user_id'] = user.id
+
     g.current_user = user
 
 
 def logout_user():
     """Remove the user from the session."""
     #TODO: invalidate token with api
-    session.pop('user_id', None)
+    if has_request_context():
+        session.pop('user_id', None)
+
     g.current_user = AnonymousUser()
 
 
@@ -114,10 +118,10 @@ def group_required(group):
     def decorator(func):
         @wraps(func)
         def check_auth(*args, **kwargs):
-            if current_user.authenticated:
-                return redirect_for('index')
-
             if not current_user.has_group(group):
+                if current_user.authenticated:
+                    return redirect_for('index')
+
                 return redirect_for('auth.login', next=request.path)
 
             return func(*args, **kwargs)
