@@ -10,11 +10,18 @@
 
         <div class="clearfix"></div>
 
-        {% for item in items %}
-            <article>
-                <h3><a href="{{ item.detail_url }}">{{ item.title }}</a></h3>
-                {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
-            </article>
-        {% endfor %}
+        <table class="table table-striped table-hover">
+            <thead>
+            </thead>
+            <tbody>{% for item in items %}
+                <tr>
+                    <td>
+                        <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
+                        {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}</tbody>
+        </table>
+
     </div></div>
 {% endblock %}
