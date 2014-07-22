@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import render_template
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
@@ -44,5 +45,17 @@ def create_app(info=None):
     @template('index.html')
     def index():
         return {'wod': Salad.word_of_the_day()}
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return render_template('errors/404.html'), 404
+
+    @app.errorhandler(403)
+    def page_not_found(e):
+        return render_template('errors/403.html'), 403
+
+    @app.errorhandler(500)
+    def page_not_found(e):
+        return render_template('errors/500.html'), 500
 
     return app
