@@ -2,7 +2,10 @@
 
 {% block content %}
     <div class="row"><div class="col-md-12">
-        <h2 class="page-header">{% block title %}Contents{% endblock %}</h2>
+        <h2 class="page-header">{% block title %}Wiki Contents{% endblock %}</h2>
+
+        <p class="lead">This wiki includes articles written by the sopython team that may be of use to members of the community.
+        If you have any ideas/corrections then please come <a href="http://chat.stackoverflow.com/rooms/6/python">speak in chat.</a></p>
 
         {% if has_group('approved') %}<ul class="list-inline pull-right">
             <li><a href="{{ url_for('wiki.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Wiki Page</a></li>
@@ -11,7 +14,7 @@
         <div class="clearfix"></div>
 
         <ul>{% for page in pages %}
-            <li><a href="{{ page.detail_url }}">{{ page.title }}</a></li>
+            <li><a href="{{ page.detail_url }}"><h4>{{ page.title }}</h4></a></li>
         {% endfor %}</ul>
     </div></div>
 {% endblock %}

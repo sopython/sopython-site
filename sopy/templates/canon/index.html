@@ -4,6 +4,10 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}Common Questions{% endblock %}</h2>
 
+        <p class="lead">This is a list of common questions within the Python tag. Each question includes some canonical SO questions
+        that can be used to close-vote any new questions that match. If you have any suggestions then please come
+        <a href="http://chat.stackoverflow.com/rooms/6/python">see us in chat.</a></p>
+
         {% if has_group('approved') %}<ul class="list-inline pull-right">
             <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>
         </ul>{% endif %}
