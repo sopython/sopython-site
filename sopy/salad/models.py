@@ -8,7 +8,7 @@ from sopy.ext.models import IDModel
 class Salad(IDModel):
     term = db.Column(db.String, nullable=False, unique=True)
     definition = db.Column(db.String, nullable=False)
-    position = db.Column(db.Integer, nullable=False, default=lambda: db.session.query(db.func.count(Salad.id) + 1).scalar())
+    position = db.Column(db.Integer, nullable=False, default=lambda: db.session.query(db.func.count(Salad.id)).scalar())
     updated_by_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     updated_by = db.relationship(User)
