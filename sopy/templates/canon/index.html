@@ -1,0 +1,31 @@
+{% extends 'canon/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Common Questions{% endblock %}</h2>
+
+        <p class="lead">This is a list of common questions within the Python tag. Each question includes some canonical SO questions
+        that can be used to close-vote any new questions that match. If you have any suggestions then please come
+        <a href="http://chat.stackoverflow.com/rooms/6/python">see us in chat.</a></p>
+
+        {% if has_group('approved') %}<ul class="list-inline pull-right">
+            <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>
+        </ul>{% endif %}
+
+        <div class="clearfix"></div>
+
+        <table class="table table-striped table-hover">
+            <thead>
+            </thead>
+            <tbody>{% for item in items %}
+                <tr>
+                    <td>
+                        <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
+                        {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
+                    </td>
+                </tr>
+            {% endfor %}</tbody>
+        </table>
+
+    </div></div>
+{% endblock %}

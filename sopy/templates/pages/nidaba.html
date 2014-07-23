@@ -1,0 +1,92 @@
+{% extends 'pages/base.html' %}
+
+{% block nav_nidaba %}active{% endblock %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+
+    <h2 class="page-header">{% block title %}Project Nidaba{% endblock %}</h2>
+
+{#    <p class="lead"><em>Nidaba was the Sumerian goddess of writing and learning and the scribe of the Gods.</em></p>#}
+
+    <p class="lead">Nidaba is a data analytics project devoted to analysing the Python questions and answers on Stack Overflow.</p>
+
+    <p>Using the <a href="https://archive.org/details/stackexchange">Stack Exchange Data Dump</a> and
+       <a href="https://api.stackexchange.com/">Stack Exchange API</a> we have incredible real-time access to the Stack
+       Overflow Python data. The <code>Python</code> tag currently has over 300,000 questions with several hundred
+       more asked every day. The aim of Nidaba is to take this information and make the most that we can from it.</p>
+
+    <h3>Where does <em>Nidaba</em> come from?</h3>
+
+    <p><a href="http://en.wikipedia.org/wiki/Nidaba">Nidaba</a> (<em>or Nisaba</em>) was the Sumerian goddess of writing,
+        teaching, and the harvest. Her main role was as the scribe of the Gods and keeper of records.</p>
+
+    <p>The <a href="http://stackoverflow.com/tour">aim of Stack Overflow</a> as a whole is to produce a library to ever
+       possible question about programming. When choosing a deity to name your project after, <em>what better one than the
+        scribe of the Gods and keeper of records?</em></p>
+
+    <h3>What We Want To Do</h3>
+
+    <p>A big part of Nidaba will be analysis of data. There will be broadly too different sets of analysis: analysis that
+       is directly actionable (i.e. finding duplicates) and analysis that is instead informative
+       (trends in the sopython data etc).</p>
+
+    <p>Some ideas we have going forward are:</p>
+
+    <ul>
+        <li>Trends in the Python questions/answers with respect to time;</li>
+        <li>Highlighting famous questions and answers;</li>
+        <li>Finding interesting, hidden gems and shining a spotlight on them;</li>
+        <li>Suggesting possible duplicate questions automatically based on similar content;</li>
+        <li>Predicting the likelihood of closure of questions based on their quality;</li>
+        <li>Identifying spam questions so they can be quickly closed and deleted;</li>
+        <li><abbr title="Fastest Gun In The West">FGITW</abbr> analysis by keeping track of edits inside grace timeframe;</li>
+        <li>Looking at "relationships" of people that interact via questions/answers/comments.</li>
+    </ul>
+
+    <h3>Technologies used</h3>
+
+    <p>As devoted <em>Pythonistas</em> we have chosen to do the majority of our work in Python. Some of the technologies
+       we are using (or plan to use) include:
+
+       <ul>
+           <li><a href="http://flask.pocoo.org/">Flask</a> - Flask is a lightweight web framework written in Python.
+               The <a href="http:sopython.com"><b>so</b>python website</a> is built using Flask.</li>
+
+           <li><a href="http://www.mongodb.org/">MongoDB</a> - MongoDB is a  NoSQL database used to host the Stack
+               Overflow data for Project Nidaba.</li>
+
+           <li><a href="http://www.postgresql.org/">PostgreSQL</a> - PostgreSQL is an open source object-relational
+               database system that is used to hold data for the <a href="http:sopython.com"><b>so</b>python website</a>.</li>
+
+           <li><a href="http://www.numpy.org/">NumPy</a> - NumPy is the fundemental package for use in numerical Python work.</li>
+
+           <li><a href="http://www.scipy.org/">SciPy</a> - SciPy is a Python-based ecosystem of open-source software for
+               mathematics, science, and engineering.</li>
+
+           <li><a href="http://pandas.pydata.org/">pandas</a> - pandas is an open source library providing high-performance,
+               easy-to-use data structures and data analysis tools. Pandas will be used extensively in analysing the Stack
+               Overflow data for Project Nidaba.</li>
+
+           <li><a href="http://scikit-learn.org/stable/">scikit-learn</a> - scikit-learn is an open-source machine-learning
+               library for the Python programming language. scikit-learn will be used extensively in trying to analyse
+               Stack Overflow questions and answers and find common trends.</li>
+
+           <li><a href="http://matplotlib.org/">matplotlib</a> - matplotlib is an extensive 2D plotting library which
+               can be used to help visualise the analysis.</li>
+       </ul>
+    </p>
+
+    <h3>How To Help</h3>
+
+    <p>Project Nidaba is a young project so far and we can constantly looking for ideas, advice, and help. Please contact
+       us <a href="mailto:ffisegydd@sopython.com">by email</a> or pop into the
+       <a href="http://chat.stackoverflow.com/rooms/6/python">sopython chatroom</a> if you want to chat.
+
+    <p>You can find the source code for Nidaba at our <a href="https://github.com/sopython/nidaba">Github page.</a></p>
+
+    <p>You can find out what we're working on at the moment and what we've got planned for the future at our
+        <a href="https://trello.com/b/0eQHsdhY/project-nidaba">Trello page.</a></p>
+
+    </div></div>
+{% endblock %}

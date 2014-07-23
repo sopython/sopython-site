@@ -1,4 +1,0 @@
-sopython-site
-=============
-
-sopython website

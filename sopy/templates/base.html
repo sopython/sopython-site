@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>{% block title %}{% endblock %} - sopython</title>
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='icon.png') }}"/>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/united/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='app.css') }}"/>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#base-nav-collapse"><i class="fa fa-bars"></i></button>
+                    <a href="{{ url_for('index') }}" class="navbar-brand"><strong>so</strong>python</a>
+                </div>
+                <div class="collapse navbar-collapse" id="base-nav-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="{% block nav_wiki %}{% endblock %}"><a href="{{ url_for('wiki.index') }}">Wiki</a></li>
+                        <li class="{% block nav_canon %}{% endblock %}"><a href="{{ url_for('canon.index') }}">Common Questions</a></li>
+                        <li class="{% block nav_salad %}{% endblock %}"><a href="{{ url_for('salad.index') }}">Salad Language</a></li>
+                        <li class="{% block nav_chatroom %}{% endblock %}"><a href="{{ url_for('pages.page', name='chatroom') }}">Chatroom</a></li>
+                        <li class="{% block nav_nidaba %}{% endblock %}"><a href="{{ url_for('pages.page', name='nidaba') }}">Nidaba</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if current_user.anonymous %}
+                            <li><a href="{{ url_for('auth.login', next=request.path) }}">Log In using Stack Exchange</a></li>
+                        {% else %}
+                            <li class="{% block nav_user %}{% endblock %}"><a href="#">{{ current_user.display_name }}</a></li>
+                            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">{% block content %}{% endblock %}</main>
+
+    <footer class="container"><div class="row"><div class="col-md-12">
+        <p><small><a href="https://github.com/sopython/sopython-site">Made</a> by the cabbage addicts from the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="http://stackoverflow.com/">Stack Overflow</a>.</small></p>
+
+    </div></div></footer>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    {% if script_ace %}
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+        <script type="text/javascript">
+            // https://gist.github.com/duncansmart/5267653
+
+            $('textarea[data-editor]').each(function() {
+                var textarea = $(this);
+                var mode = textarea.data('editor');
+
+                var div = $('<div>', {
+                    'width': textarea.outerWidth(),
+                    'height': textarea.outerHeight(),
+                    'class': textarea.attr('class')
+                }).insertBefore(textarea);
+
+                textarea.hide();
+
+                var editor = ace.edit(div[0]);
+                var session = editor.getSession();
+
+                editor.setTheme("ace/theme/github");
+
+                session.setValue(textarea.val());
+                session.setMode('ace/mode/' + mode);
+                session.setNewLineMode('unix');
+                session.setTabSize(4);
+                session.setUseSoftTabs(true);
+                session.setUseWrapMode(true);
+
+                textarea.closest('form').submit(function() {
+                    textarea.val(editor.getSession().getValue());
+                });
+            });
+        </script>
+    {% endif %}
+
+    {% block script %}{% endblock %}
+</body>
+</html>

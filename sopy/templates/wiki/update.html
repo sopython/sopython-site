@@ -1,0 +1,25 @@
+{% extends 'wiki/base.html' %}
+
+{% set script_ace = True %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}{% if page is none %}Add Wiki Page{% else %}Edit {{ page.title }}{% endif %}{% endblock %}</h2>
+
+        <form method="post" class="form-horizontal">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.title.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.title(class='form-control') }}</div>
+            </div>
+            <div class="form-group">
+                {{ form.body.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.body(class='form-control', rows=20, **{'data-editor': 'markdown'}) }}</div>
+            </div>
+            <div class="form-group"><div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                <a href="{% if page is none %}{{ url_for('wiki.index') }}{% else %}{{ page.detail_url }}{% endif %}" class="btn btn-default">Cancel</a>
+            </div></div>
+        </form>
+    </div></div>
+{% endblock %}
