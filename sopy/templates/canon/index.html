@@ -22,6 +22,11 @@
                     <td>
                         <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
                         {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
+                        {% if item.tags %}
+                            <ul class="list-inline">{% for tag in item.tags %}
+                            <li><span class="label label-default">{{ tag }}</span></li>
+                            {% endfor %}</ul>
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}</tbody>
