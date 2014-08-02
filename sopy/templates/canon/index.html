@@ -20,7 +20,7 @@
             <tbody>{% for item in items %}
                 <tr>
                     <td>
-                        <h4><a href="{{ item.detail_url }}">{{ item.title }}</a></h4>
+                        <h4><a href="{{ item.detail_url }}">{{ item.title|markdown }}</a></h4>
                         {% if item.excerpt %}{{ item.excerpt|markdown }}{% endif %}
                         {% if item.tags %}
                             <ul class="list-inline">{% for tag in item.tags %}
