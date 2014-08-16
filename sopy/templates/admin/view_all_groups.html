@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block title %}user groups{% endblock %}
+{% block content %}
+<div class="page-lead">
+    <h1>Groups</h1>
+</div>
+<hr/>
+
+<div class="container">
+    {% for group in groups %}
+        <h1><a href="{{ url_for('admin.view_group', group_name=group.name) }}">{{ group.name }}</a></h1>
+    {% endfor %}
+</div>
+{% endblock %}

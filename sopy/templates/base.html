@@ -31,6 +31,9 @@
                         {% else %}
                             <li class="{% block nav_user %}{% endblock %}"><a href="#">{{ current_user.display_name }}</a></li>
                             <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+                            {% if has_group('approved') %}
+                                <li class="{% block nav_admin %}{% endblock %}"><a href="{{ url_for('admin.view_all_groups') }}">Admin</a></li>
+                            {% endif %}
                         {% endif %}
                     </ul>
                 </div>
