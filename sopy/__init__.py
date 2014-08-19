@@ -39,23 +39,24 @@ def create_app(info=None):
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
     app.register_blueprint(pages.bp, url_prefix='/pages')
 
-    from sopy.salad.models import Salad
-
     @app.route('/')
     @template('index.html')
     def index():
+        from sopy.salad.models import Salad
+
         return {'wod': Salad.word_of_the_day()}
 
-    @app.errorhandler(404)
-    def page_not_found(e):
-        return render_template('errors/404.html'), 404
-
     @app.errorhandler(403)
-    def page_not_found(e):
+    def forbidden(e):
         return render_template('errors/403.html'), 403
 
+    @app.errorhandler(404)
+    def not_found(e):
+
+        return render_template('errors/404.html'), 404
+
     @app.errorhandler(500)
-    def page_not_found(e):
+    def internal_server_error(e):
         return render_template('errors/500.html'), 500
 
     return app

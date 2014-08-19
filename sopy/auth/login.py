@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, g, request, has_request_context
+from flask import session, g, request, has_request_context, abort
 from werkzeug.local import LocalProxy
 from sopy import db
 from sopy.auth import bp
@@ -8,7 +8,6 @@ from sopy.ext.views import redirect_for
 
 class UserMixin(object):
     """Placeholders for all the attributes a user object should have."""
-
     id = None
     superuser = False
 
@@ -24,7 +23,6 @@ class UserMixin(object):
 
 class AnonymousUser(UserMixin):
     """Has no permissions.  Used when no user is logged in."""
-
     authenticated = False
     anonymous = True
 
@@ -114,13 +112,14 @@ def group_required(group):
     """Redirect to the login page if the current user is not in the group.
 
     If they are logged in but don't have permission, don't try to log in, it will result in an infinite loop.
+    Raise 403 Forbidden instead.
     """
     def decorator(func):
         @wraps(func)
         def check_auth(*args, **kwargs):
             if not current_user.has_group(group):
                 if current_user.authenticated:
-                    return redirect_for('index')
+                    abort(403)
 
                 return redirect_for('auth.login', next=request.path)
 

@@ -1,8 +1,10 @@
 {% extends 'canon/base.html' %}
 
+{% block title %}Remove {{ item.title }}{% endblock %}
+
 {% block content %}
     <div class="row"><div class="col-md-12">
-        <h2 class="page-header">{% block title %}Remove {{ item.title }}{% endblock %}</h2>
+        <h2 class="page-header">Remove {{ item.title|markdown }}</h2>
 
         <p>This operation is permanent.  Are you sure?</p>
 

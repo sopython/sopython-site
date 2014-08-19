@@ -1,8 +1,10 @@
 {% extends 'canon/base.html' %}
 
+{% block title %}{{ item.title }}{% endblock %}
+
 {% block content %}
     <div class="row"><div class="col-md-12">
-        <h2 class="page-header">{% block title %}{{ item.title|markdown }}{% endblock %}</h2>
+        <h2 class="page-header">{{ item.title|markdown }}</h2>
 
         {% if has_group('approved') %}<ul class="list-inline pull-right">
             <li><a href="{{ item.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>

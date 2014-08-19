@@ -2,9 +2,11 @@
 
 {% set script_ace = True %}
 
+{% block title %}{% if item is none %}Add Common Question{% else %}Edit {{ item.title }}{% endif %}{% endblock %}
+
 {% block content %}
     <div class="row"><div class="col-md-12">
-        <h2 class="page-header">{% block title %}{% if item is none %}Add Common Question{% else %}Edit {{ item.title }}{% endif %}{% endblock %}</h2>
+        <h2 class="page-header">{% if item is none %}Add Common Question{% else %}Edit {{ item.title|markdown }}{% endif %}</h2>
 
         {# TODO: bootstrap form macros #}
         <form method="post" class="form-horizontal">
