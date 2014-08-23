@@ -3,13 +3,26 @@ from flask import url_for, redirect, request, session, current_app, g
 import requests
 from sopy import db
 from sopy.auth import bp
+from sopy.auth.forms import LoginForm
 from sopy.auth.login import login_user, logout_user
 from sopy.auth.models import User
-from sopy.ext.views import redirect_for, redirect_next
+from sopy.ext.views import redirect_for, redirect_next, template
 
 
-@bp.route('/login')
+@bp.route('/login', methods=['GET', 'POST'])
+@template('auth/login.html')
 def login():
+    if current_app.debug and 'SE_CONSUMER_KEY' not in current_app.config:
+        form = LoginForm()
+
+        if form.validate_on_submit():
+            login_user(form.user)
+            db.session.commit()
+
+            return redirect_next()
+
+        return {'form': form}
+
     qs = urlencode({
         'client_id': current_app.config['SE_CONSUMER_KEY'],
         'redirect_uri': url_for('auth.authorized', next=request.args.get('next'), _external=True)

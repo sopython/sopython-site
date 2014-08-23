@@ -25,7 +25,7 @@ class SEUser(ExternalIDModel):
 
         o = cls.get_unique(id=id)
         r = requests.get(users_url.format(id), params={
-            'key': current_app.config['SE_API_KEY'],
+            'key': current_app.config.get('SE_API_KEY'),
             'site': 'stackoverflow',
         })
         data = r.json()['items'][0]
@@ -35,7 +35,7 @@ class SEUser(ExternalIDModel):
     def se_update(self, data=None):
         if data is None:
             r = requests.get(users_url.format(self.id), params={
-                'key': current_app.config['SE_API_KEY'],
+                'key': current_app.config.get('SE_API_KEY'),
                 'site': 'stackoverflow',
             })
             data = r.json()['items'][0]
@@ -71,7 +71,7 @@ class SEQuestion(HasTags, ExternalIDModel):
 
         o = cls.get_unique(id=id)
         r = requests.get(questions_url.format(id), params={
-            'key': current_app.config['SE_API_KEY'],
+            'key': current_app.config.get('SE_API_KEY'),
             'site': 'stackoverflow',
             'filter': '!5RCKN561Hrx5Mj7Pc*qRTOUCj',
         })
@@ -89,7 +89,7 @@ class SEQuestion(HasTags, ExternalIDModel):
         """
         if data is None:
             r = requests.get(questions_url.format(self.id), params={
-                'key': current_app.config['SE_API_KEY'],
+                'key': current_app.config.get('SE_API_KEY'),
                 'site': 'stackoverflow',
                 'filter': '!5RCKN561Hrx5Mj7Pc*qRTOUCj',
             })

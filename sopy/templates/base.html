@@ -27,7 +27,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if current_user.anonymous %}
-                            <li><a href="{{ url_for('auth.login', next=request.path) }}">Log In using Stack Exchange</a></li>
+                            <li><a href="{{ url_for('auth.login', next=request.path) }}">Log In</a></li>
                         {% else %}
                             <li class="{% block nav_user %}{% endblock %}"><a href="#">{{ current_user.display_name }}</a></li>
                             <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>

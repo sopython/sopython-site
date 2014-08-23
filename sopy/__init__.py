@@ -4,7 +4,6 @@ from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
-from sopy.ext.views import template
 
 alembic = Alembic()
 babel = Babel()
@@ -38,6 +37,8 @@ def create_app(info=None):
     app.register_blueprint(salad.bp, url_prefix='/salad')
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
     app.register_blueprint(pages.bp, url_prefix='/pages')
+
+    from sopy.ext.views import template
 
     @app.route('/')
     @template('index.html')
