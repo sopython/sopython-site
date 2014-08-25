@@ -11,7 +11,7 @@ user_id_re = re.compile(r'/u(?:sers)?/([0-9]+)')
 
 class SEUser(ExternalIDModel):
     display_name = db.Column(db.String, nullable=False)
-    profile_image = db.Column(db.String)
+    profile_image = db.Column(db.String, nullable=False)
 
     def __str__(self):
         return self.display_name
@@ -29,9 +29,12 @@ class SEUser(ExternalIDModel):
             'key': current_app.config.get('SE_API_KEY'),
             'site': 'stackoverflow',
         })
-        data = r.json()['items'][0]
+        items = r.json()['items']
 
-        return o.se_update(data)
+        if not items:
+            return None
+
+        return o.se_update(items[0])
 
     def se_update(self, data=None):
         if data is None:

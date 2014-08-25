@@ -1,0 +1,38 @@
+{% extends "admin/base.html" %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}{{ group.name }}{% endblock %}</h2>
+
+        <form method="post" class="form-inline">
+            {{ form.hidden_tag() }}
+            <div class="form-group{% if form.user_ids.errors %} has-error{% endif %}">
+                {{ form.user_ids.label(class='sr-only') }}
+                {{ form.user_ids(class='form-control', placeholder=form.user_ids.label.text) }}
+            </div>
+            <button type="submit" class="btn btn-success"><i class="fa fa-plus"></i> Add Users</button>
+        </form>
+
+        <hr/>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th class="col-sm-1">ID</th>
+                    <th>Name</th>
+                    <th class="col-sm-1"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for user in group.users|sort(attribute='id') %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td><img src="{{ user.profile_image }}" alt="" height="24"/> {{ user.display_name }}</td>
+                        <td><a href="{{ url_for('admin.groups_remove_user', name=group.name, user_id=user.id) }}" class="btn btn-danger btn-block btn-xs"><i class="fa fa-minus"></i> Remove</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div></div>
+{% endblock %}

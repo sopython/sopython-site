@@ -1,0 +1,11 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Groups{% endblock %}</h2>
+
+        <ul>{% for group in groups %}
+            <li><a href="{{ url_for('admin.groups_detail', name=group.name) }}">{{ group.name }}</a></li>
+        {% endfor %}</ul>
+    </div></div>
+{% endblock %}

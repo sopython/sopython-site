@@ -24,6 +24,7 @@
                         <li class="{% block nav_salad %}{% endblock %}"><a href="{{ url_for('salad.index') }}">Salad Language</a></li>
                         <li class="{% block nav_chatroom %}{% endblock %}"><a href="{{ url_for('pages.page', name='chatroom') }}">Chatroom</a></li>
                         <li class="{% block nav_nidaba %}{% endblock %}"><a href="{{ url_for('pages.page', name='nidaba') }}">Nidaba</a></li>
+                        {% if has_group('approved') %}<li class="{% block nav_admin %}{% endblock %}"><a href="{{ url_for('admin.groups_index') }}">Admin</a></li>{% endif %}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {% if current_user.anonymous %}
@@ -31,9 +32,6 @@
                         {% else %}
                             <li class="{% block nav_user %}{% endblock %}"><a href="#">{{ current_user.display_name }}</a></li>
                             <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
-                            {% if has_group('approved') %}
-                                <li class="{% block nav_admin %}{% endblock %}"><a href="{{ url_for('admin.view_all_groups') }}">Admin</a></li>
-                            {% endif %}
                         {% endif %}
                     </ul>
                 </div>
