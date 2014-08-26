@@ -1,9 +1,10 @@
 import click
+from flask.cli import AppGroup
 from sopy import db
 from sopy.auth.models import User, Group
 
 
-@click.group()
+@click.command(cls=AppGroup)
 def cli():
     """Manage users and groups."""
     pass

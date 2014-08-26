@@ -1,5 +1,6 @@
 from flask import Flask
 from flask import render_template
+from flask.cli import with_appcontext
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel

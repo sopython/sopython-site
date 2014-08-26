@@ -1,6 +1,6 @@
 import click
 from flask import current_app
-from flask.cli import FlaskGroup
+from flask.cli import FlaskGroup, with_appcontext
 from sopy import create_app
 
 cli = FlaskGroup(create_app=create_app)
@@ -8,6 +8,7 @@ cli = FlaskGroup(create_app=create_app)
 
 @cli.command('shell', short_help='Runs a shell in the app context.')
 @click.option('--plain', is_flag=True, help='Use a plain shell even if iPython is installed.')
+@with_appcontext
 def shell_command(plain=False):
     """Run a Python shell in the Flask application context."""
     try:
