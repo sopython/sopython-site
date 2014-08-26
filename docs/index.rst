@@ -7,3 +7,5 @@ sopython-site documentation
     dev_install
     shell
     prod_install
+
+    license

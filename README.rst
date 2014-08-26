@@ -16,8 +16,13 @@ Develop
 ::
 
     git clone ssh://git@github.com/sopython/sopython-site sopy
-    pip install -e git+ssh://git@github.com/mitsuhiko/flask#egg=flask
+    pip install https://github.com/mitsuhiko/flask/archive/master.zip
     pip install -e ./sopy
-    createdb sopy
-    sopy db upgrade
-    sopy --debug run -h localhost
+
+Documentation
+-------------
+
+::
+
+    cd docs/
+    sphinx-build ./ ./_build/
