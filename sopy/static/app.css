@@ -2,3 +2,7 @@ body>footer {
     text-align: center;
     padding-top: 21px;
 }
+code {
+    color: #2d6987;
+    background-color: #f1f5f9;
+}
