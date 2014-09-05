@@ -63,8 +63,12 @@ def load_user():
     if user_id is None:
         g.current_user = AnonymousUser()
     else:
-        from sopy.auth.models import User
+        from sopy.auth.models import Group, User
 
+        # pre-load group hierarchy to avoid extra queries
+        Group.query.options(db.joinedload(Group._groups)).all()
+
+        # load user and groups
         user = User.query.options(db.joinedload(User._groups)).get(user_id)
         g.current_user = user if user is not None else AnonymousUser()
 

@@ -4,6 +4,10 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}{{ group.name }}{% endblock %}</h2>
 
+        {% if group.groups %}<p>In groups: {% for sub in group.groups %}<a href="{{ url_for('admin.groups_detail', name=sub) }}">{{ sub }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+
+        <hr/>
+
         <form method="post" class="form-inline">
             {{ form.hidden_tag() }}
             <div class="form-group{% if form.user_ids.errors %} has-error{% endif %}">

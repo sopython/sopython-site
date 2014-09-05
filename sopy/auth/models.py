@@ -10,6 +10,16 @@ from sopy.se_data.models import SEUser
 class Group(IDModel):
     name = db.Column(db.String, nullable=False, unique=True)
 
+    _groups = db.relationship(
+        lambda: Group, lambda: group_group,
+        primaryjoin=lambda: Group.id == group_group.c.member_id,
+        secondaryjoin=lambda: Group.id == group_group.c.group_id,
+        collection_class=set,
+        backref=db.backref('_members', collection_class=set)
+    )
+    groups = association_proxy('_groups', 'name', creator=lambda x: Group.get_unique(x))
+    members = association_proxy('_members', 'name', creator=lambda x: Group.get_unique(x))
+
     def __init__(self, name=None, **kwargs):
         if name is not None:
             kwargs['name'] = name
@@ -26,6 +36,24 @@ class Group(IDModel):
     def get_unique(cls, name, **kwargs):
         return super(Group, cls).get_unique(name=name, **kwargs)
 
+    def has_group(self, *groups):
+        for group in groups:
+            if isinstance(group, str):
+                if group in self.groups:
+                    return True
+
+            if group in self._groups:
+                return True
+
+        return any(sub.has_group(*groups) for sub in self._groups)
+
+
+group_group = db.Table(
+    'group_group',
+    db.Column('member_id', db.Integer, db.ForeignKey(Group.id), primary_key=True),
+    db.Column('group_id', db.Integer, db.ForeignKey(Group.id), primary_key=True)
+)
+
 
 class User(UserMixin, SEUser):
     __tablename__ = 'user'
@@ -33,20 +61,28 @@ class User(UserMixin, SEUser):
     id = db.Column(db.Integer, db.ForeignKey(SEUser.id), primary_key=True)
     superuser = db.Column(db.Boolean, nullable=False, default=False)
 
-    _groups = db.relationship(Group, lambda: user_group, collection_class=set, backref=db.backref('users', collection_class=set))
+    _groups = db.relationship(
+        Group, lambda: user_group, collection_class=set,
+        backref=db.backref('users', collection_class=set)
+    )
     groups = association_proxy('_groups', 'name', creator=Group.get_unique)
 
     authenticated = True
     anonymous = False
 
-    def has_group(self, group):
+    def has_group(self, *groups):
         if self.superuser:
             return True
 
-        if isinstance(group, str):
-            return group in self.groups
+        for group in groups:
+            if isinstance(group, str):
+                if group in self.groups:
+                    return True
 
-        return group in self._groups
+            if group in self._groups:
+                return True
+
+        return any(sub.has_group(*groups) for sub in self._groups)
 
     @classmethod
     def oauth_load(cls, token=None):
