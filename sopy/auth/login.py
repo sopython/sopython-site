@@ -1,5 +1,5 @@
 from functools import wraps
-from flask import session, g, request, has_request_context, abort
+from flask import session, g, request, has_request_context, abort, current_app
 from werkzeug.local import LocalProxy
 from sopy import db
 from sopy.auth import bp
@@ -8,6 +8,7 @@ from sopy.ext.views import redirect_for
 
 class UserMixin(object):
     """Placeholders for all the attributes a user object should have."""
+
     id = None
     superuser = False
 
@@ -23,6 +24,7 @@ class UserMixin(object):
 
 class AnonymousUser(UserMixin):
     """Has no permissions.  Used when no user is logged in."""
+
     authenticated = False
     anonymous = True
 
@@ -79,9 +81,9 @@ current_user = LocalProxy(_get_current_user)
 """Proxy to the current user."""
 
 
-def has_group(group):
+def has_group(*groups):
     """Check if the current user is in the group."""
-    return current_user.has_group(group)
+    return current_user.has_group(*groups)
 
 
 @bp.app_context_processor
@@ -96,32 +98,60 @@ def auth_context():
     }
 
 
+class LoginError(Exception):
+    """Error raised to cause a redirect to the login page."""
+
+    pass
+
+
+@bp.app_errorhandler(LoginError)
+def handle_login_error(e):
+    """Redirect to the login page when LoginError is raised.
+
+    If the user is logged in but doesn't have permission, don't try to log in, it will result in an infinite loop.
+    Raise 403 Forbidden instead.
+    """
+    if not current_user.authenticated:
+        return redirect_for('auth.login', next=request.path)
+
+    # abort(403)
+    # can't raise other handled exception from error handler, results in 500
+    # so simulate what flask would do
+    try:
+        abort(403)
+    except Exception as e:
+        return current_app.handle_user_exception(e)
+
+
+def require_login():
+    """Redirect to the login page if the user is not logged in."""
+    if current_user.anonymous:
+        raise LoginError()
+
+
 def login_required(func):
-    """Redirect to the login page if the current user is anonymous."""
+    """Decorate a function to require the user to be logged in."""
     @wraps(func)
     def check_auth(*args, **kwargs):
-        if current_user.anonymous:
-            return redirect_for('auth.login', next=request.path)
+        require_login()
 
         return func(*args, **kwargs)
 
     return check_auth
 
 
-def group_required(group):
-    """Redirect to the login page if the current user is not in the group.
+def require_group(*groups):
+    """Redirect to the login page if the user is not in at least one of the groups."""
+    if not has_group(*groups):
+        raise LoginError()
 
-    If they are logged in but don't have permission, don't try to log in, it will result in an infinite loop.
-    Raise 403 Forbidden instead.
-    """
+
+def group_required(*groups):
+    """Decorate a function to require the user to have at least one of the groups."""
     def decorator(func):
         @wraps(func)
         def check_auth(*args, **kwargs):
-            if not current_user.has_group(group):
-                if current_user.authenticated:
-                    abort(403)
-
-                return redirect_for('auth.login', next=request.path)
+            require_group(*groups)
 
             return func(*args, **kwargs)
 
