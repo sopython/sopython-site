@@ -29,7 +29,7 @@
             </thead>
 
             <tbody>
-                {% for user in group.users|sort(attribute='id') %}
+                {% for user in group.users|sort(attribute='display_name') %}
                     <tr>
                         <td>{{ user.id }}</td>
                         <td><img src="{{ user.profile_image }}" alt="" height="24"/> {{ user.display_name }}</td>
