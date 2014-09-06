@@ -6,7 +6,7 @@ with open('requirements.txt') as f:
 
 setup(
     name='sopy',
-    version='1.2.2-dev',
+    version='1.2.2',
     packages=find_packages(),
     include_package_data=True,
     url='http://sopython.com/',
