@@ -24,7 +24,7 @@ copyright = '2014, sopython organization'
 # built documents.
 #
 # The short X.Y version.
-version = '1.2.1'
+version = '1.2.2-dev'
 # The full version, including alpha/beta/rc tags.
 release = version
 
