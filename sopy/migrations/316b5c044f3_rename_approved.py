@@ -32,13 +32,6 @@ class Group(Base):
     id = sa.Column(sa.Integer, primary_key=True)
     name = sa.Column(sa.String)
 
-    groups = relationship(
-        'Group', 'group_group',
-        primaryjoin='Group.id == group_group.c.member_id',
-        secondaryjoin='Group.id == group_group.c.group_id',
-        backref='members'
-    )
-
 
 def upgrade():
     op.execute("""update "group" set "name" = 'Dark Council' where "name" = 'approved'""")
