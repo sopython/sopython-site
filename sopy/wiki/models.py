@@ -9,6 +9,8 @@ class WikiPage(IDModel):
     title = db.Column(db.String, nullable=False)
     body = db.Column(db.String, nullable=False)
     updated = db.Column(db.DateTime, nullable=False, default=datetime.utcnow, onupdate=datetime.utcnow)
+    draft = db.Column(db.Boolean, nullable=False, default=False)
+    community = db.Column(db.Boolean, nullable=False, default=False)
     author_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     author = db.relationship(User)

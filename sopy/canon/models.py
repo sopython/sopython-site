@@ -11,6 +11,8 @@ class CanonItem(HasTags, IDModel):
     title = db.Column(db.String, nullable=False)
     excerpt = db.Column(db.String, nullable=False, default='')
     body = db.Column(db.String, nullable=False, default='')
+    draft = db.Column(db.Boolean, nullable=False, default=True)
+    community = db.Column(db.Boolean, nullable=False, default=False)
     updated_by_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
 
     updated_by = db.relationship(User)

@@ -6,7 +6,7 @@
 
         <p class="lead">This wiki includes articles written by the sopython team that may be of use to members of the community.  If you have any ideas/corrections then please come <a href="http://chat.stackoverflow.com/rooms/6/python">speak in chat.</a></p>
 
-        {% if has_group('approved') %}<ul class="list-inline pull-right">
+        {% if current_user.authenticated %}<ul class="list-inline pull-right">
             <li><a href="{{ url_for('wiki.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Wiki Page</a></li>
         </ul>{% endif %}
 
@@ -15,7 +15,13 @@
         <table class="table table-striped table-hover">
             <tbody>{% for page in pages %}
                 <tr>
-                    <td><a href="{{ page.detail_url }}"><strong>{{ page.title }}</strong></a></td>
+                    <td>
+                        <ul class="list-inline">
+                            <li><a href="{{ page.detail_url }}"><strong>{{ page.title }}</strong></a></li>
+                            {% if page.draft %}<li><span class="label label-warning">Draft</span></li>{% endif %}
+                            {% if page.community %}<li><span class="label label-info">Community</span></li>{% endif %}
+                        </ul>
+                    </td>
                 </tr>
             {% endfor %}</tbody>
         </table>

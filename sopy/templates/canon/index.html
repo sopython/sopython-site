@@ -6,7 +6,7 @@
 
         <p class="lead">This is a list of common questions within the Python tag. Each question includes some canonical SO questions that can be used to close-vote any new questions that match. If you have any suggestions then please come <a href="http://chat.stackoverflow.com/rooms/6/python">see us in chat</a>.</p>
 
-        {% if has_group('approved') %}<ul class="list-inline pull-right">
+        {% if current_user.authenticated %}<ul class="list-inline pull-right">
             <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>
         </ul>{% endif %}
 
@@ -20,6 +20,8 @@
                     <td>
                         <ul class="list-inline">
                             <li><a href="{{ item.detail_url }}"><strong>{{ item.title|markdown }}</strong></a></li>
+                            {% if item.draft %}<li><span class="label label-warning">Draft</span></li>{% endif %}
+                            {% if item.community %}<li><span class="label label-info">Community</span></li>{% endif %}
                             {% if item.tags %}{% for tag in item.tags %}
                                 <li><span class="label label-default">{{ tag }}</span></li>
                             {% endfor %}{% endif %}

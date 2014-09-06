@@ -6,10 +6,13 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{{ item.title|markdown }}</h2>
 
-        {% if has_group('approved') %}<ul class="list-inline pull-right">
-            <li><a href="{{ item.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>
-            <li><a href="{{ item.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>
-        </ul>{% endif %}
+        {% if item.draft %}<div class="alert alert-warning">This page is in draft mode.  Only editors and logged in users with the link may view it.</div>{% endif %}
+        {% if item.community %}<div class="alert alert-info">This page is in community mode.  Any logged in users may edit it.</div>{% endif %}
+
+        <ul class="list-inline pull-right">
+            {% if has_group('editor') or item.draft or item.community %}<li><a href="{{ item.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>{% endif %}
+            {% if has_group('editor') %}<li><a href="{{ item.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>{% endif %}
+        </ul>
 
         <div class="clearfix"></div>
 

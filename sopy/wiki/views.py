@@ -1,17 +1,22 @@
 from flask import redirect
 from flask_wtf import Form
 from sopy import db
-from sopy.auth.login import group_required, current_user
+from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
 from sopy.ext.views import template, redirect_for
 from sopy.wiki import bp
-from sopy.wiki.forms import WikiPageForm
+from sopy.wiki.forms import WikiPageForm, WikiPageEditorForm
 from sopy.wiki.models import WikiPage
 
 
 @bp.route('/')
 @template('wiki/index.html')
 def index():
-    pages = WikiPage.query.order_by(WikiPage.title).all()
+    pages = WikiPage.query.order_by(WikiPage.title)
+
+    if not has_group('editor'):
+        pages = pages.filter(db.not_(WikiPage.draft))
+
+    pages = pages.all()
 
     return {'pages': pages}
 
@@ -27,10 +32,14 @@ def detail(id):
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @template('wiki/update.html')
-@group_required('approved')
+@login_required
 def update(id=None):
     page = WikiPage.query.get_or_404(id) if id is not None else None
-    form = WikiPageForm(obj=page)
+
+    if not (page is None or page.draft or page.community):
+        require_group('editor')
+
+    form = WikiPageEditorForm(obj=page) if has_group('editor') else WikiPageForm(obj=page)
 
     if form.validate_on_submit():
         if page is None:
@@ -49,7 +58,7 @@ def update(id=None):
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
 @template('wiki/delete.html')
-@group_required('approved')
+@group_required('editor')
 def delete(id):
     page = WikiPage.query.get_or_404(id)
     form = Form()

@@ -8,6 +8,8 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% if item is none %}Add Common Question{% else %}Edit {{ item.title|markdown }}{% endif %}</h2>
 
+        {% if item is none and not has_group('editor') %}<div class="alert alert-warning">You are not an editor. The page will be created in draft mode and must be approved by an editor.</div>{% endif %}
+
         {# TODO: bootstrap form macros #}
         <form method="post" class="form-horizontal">
             {{ form.hidden_tag() }}
@@ -31,6 +33,12 @@
                 {{ form.question_links.label(class='control-label col-sm-2') }}
                 <div class="col-sm-10">{{ form.question_links(class='form-control', rows=3) }}</div>
             </div>
+            {% if has_group('editor') %}<div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">{{ form.draft.label(text=form.draft() + ' ' + form.draft.label.text) }}</div>
+                    <div class="checkbox">{{ form.community.label(text=form.community() + ' ' + form.community.label.text) }}</div>
+                </div>
+            </div>{% endif %}
             <div class="form-group"><div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
                 <a href="{% if item is none %}{{ url_for('canon.index') }}{% else %}{{ item.detail_url }}{% endif %}" class="btn btn-default">Cancel</a>

@@ -4,11 +4,14 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}{{ page.title }}{% endblock %}</h2>
 
-        {% if has_group('approved') %}<ul class="list-inline pull-right">
+        {% if page.draft %}<div class="alert alert-warning">This page is in draft mode.  Only editors or any logged in users with the link may view it.</div>{% endif %}
+        {% if page.community %}<div class="alert alert-info">This page is in community mode.  Any logged in users may edit it.</div>{% endif %}
+
+        <ul class="list-inline pull-right">
             <li><small><i>Last edited {{ page.updated|datetimeformat }}</i></small></li>
-            <li><a href="{{ page.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>
-            <li><a href="{{ page.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>
-        </ul>{% endif %}
+            {% if has_group('editor') or page.draft or page.community %}<li><a href="{{ page.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>{% endif %}
+            {% if has_group('editor') %}<li><a href="{{ page.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>{% endif %}
+        </ul>
 
         <div class="clearfix"></div>
 
