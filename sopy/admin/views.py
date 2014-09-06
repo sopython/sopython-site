@@ -7,7 +7,7 @@ from sopy.auth.login import group_required
 
 
 @bp.before_request
-@group_required('approved')
+@group_required('Dark Council')
 def authorize():
     pass
 

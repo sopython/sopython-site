@@ -21,7 +21,7 @@ def index():
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
 @template('salad/update.html')
-@group_required('approved')
+@group_required('Dark Council')
 def update(id=None):
     item = Salad.query.get_or_404(id) if id is not None else None
     form = SaladForm(obj=item)
@@ -42,7 +42,7 @@ def update(id=None):
 
 @bp.route('/<int:id>/move_up', endpoint='move_up')
 @bp.route('/<int:id>/move_down', endpoint='move_down', defaults={'down': True})
-@group_required('approved')
+@group_required('Dark Council')
 def move(id, down=False):
     item = Salad.query.get_or_404(id)
 
@@ -58,7 +58,7 @@ def move(id, down=False):
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
 @template('salad/delete.html')
-@group_required('approved')
+@group_required('Dark Council')
 def delete(id):
     item = Salad.query.get_or_404(id)
     form = Form()

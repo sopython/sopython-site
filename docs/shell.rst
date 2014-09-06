@@ -19,10 +19,10 @@ Add a user (by Stack Overflow id) to the approved group.  This can be done using
     sopy auth load_user USER_ID
     sopy auth set_group USER_ID approved
 
-List the approved users with this query in the python shell::
+List the editors with this query in the python shell::
 
     from sopy.auth.models import Group
-    Group.query.filter_by(name='approved').one().users
+    Group.query.filter_by(name='editor').one().users
 
 Generate a database migration after making changes to the model code::
 
