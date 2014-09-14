@@ -30,7 +30,7 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    from sopy import auth, tags, se_data, canon, salad, wiki, pages, admin
+    from sopy import auth, tags, se_data, canon, salad, wiki, pages, admin, transcript
 
     app.register_blueprint(auth.bp, url_prefix='/auth')
     app.register_blueprint(tags.bp, url_prefix='/tags')
@@ -40,6 +40,8 @@ def create_app(info=None):
     app.register_blueprint(wiki.bp, url_prefix='/wiki')
     app.register_blueprint(pages.bp, url_prefix='/pages')
     app.register_blueprint(admin.bp, url_prefix='/admin')
+    app.register_blueprint(transcript.bp, url_prefix='/transcript')
+
 
     @app.route('/')
     def index():

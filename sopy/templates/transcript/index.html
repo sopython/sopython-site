@@ -1,0 +1,19 @@
+{% extends 'transcript/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}Transcript{% endblock %}</h2>
+
+        <p class="lead">This is the transcript of the sopython chatroom.</p>
+
+        {% for message in messages %}
+
+            <p>{{ message }}</p>
+
+        {% endfor %}
+
+
+        <div class="clearfix"></div>
+
+    </div></div>
+{% endblock %}
