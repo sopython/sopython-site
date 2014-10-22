@@ -21,7 +21,7 @@ def index():
     return {'items': items}
 
 
-@bp.route('/<int:id>/')
+@bp.route('/<id_slug:id>/')
 @template('canon/detail.html')
 def detail(id):
     item = CanonItem.query.get_or_404(id)

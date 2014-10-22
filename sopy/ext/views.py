@@ -3,12 +3,14 @@ from functools import wraps
 from urllib.parse import urlparse, urljoin
 from flask import render_template, url_for, redirect, request
 import hoep as h
+from inflection import parameterize
 from markupsafe import Markup
 from pygments import highlight
 from pygments.formatters import get_formatter_by_name
 import re
 from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
+from werkzeug.routing import BaseConverter
 
 
 def template(path=None, **default_context):
@@ -159,8 +161,36 @@ def markdown(text):
     return Markup(md.render(text))
 
 
+class IDSlugConverter(BaseConverter):
+    """Matches an int id and optional slug, separated by "/".
+
+    Only the id is returned, the slug is dropped if present.  The id can be negative.  When building a url, pass in the
+    model instance, not the id or slug.  By default the slug is generated from the string representation of the object.
+
+    :param attr: name of field to slugify, or None for default of str(instance)
+    :param length: max length of slug when building url
+    """
+
+    regex = r'-?\d+(?:/[\w\-]*)?'
+
+    def __init__(self, map, attr=None, length=80):
+        self.attr = attr
+        self.length = int(length)
+
+        super(IDSlugConverter, self).__init__(map)
+
+    def to_python(self, value):
+        id, slug = (value.split('/') + [None])[:2]
+
+        return int(id)
+
+    def to_url(self, value):
+        raw = str(value) if self.attr is None else getattr(value, self.attr, '')
+        slug = parameterize(raw)[:self.length].rstrip('-')
+
+        return '{}/{}'.format(value.id, slug).rstrip('/')
+
+
 def init_app(app):
     app.add_template_filter(markdown)
-
-
-#TODO id_slug route processor accespts id/slug, ignores slug if not present
+    app.url_map.converters['id_slug'] = IDSlugConverter

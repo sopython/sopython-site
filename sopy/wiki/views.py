@@ -21,20 +21,20 @@ def index():
     return {'pages': pages}
 
 
-@bp.route('/<int:id>/')
+@bp.route('/<title>/')
 @template('wiki/detail.html')
-def detail(id):
-    page = WikiPage.query.get_or_404(id)
+def detail(title):
+    page = WikiPage.query.filter(WikiPage.title == title).first_or_404()
 
     return {'page': page}
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
-@bp.route('/<int:id>/update', methods=['GET', 'POST'])
+@bp.route('/<title>/update', methods=['GET', 'POST'])
 @template('wiki/update.html')
 @login_required
-def update(id=None):
-    page = WikiPage.query.get_or_404(id) if id is not None else None
+def update(title=None):
+    page = WikiPage.query.filter(WikiPage.title == title).first_or_404() if title is not None else None
 
     if not (page is None or page.draft or page.community):
         require_group('editor')
@@ -56,11 +56,11 @@ def update(id=None):
 
 
 
-@bp.route('/<int:id>/delete', methods=['GET', 'POST'])
+@bp.route('/<title>/delete', methods=['GET', 'POST'])
 @template('wiki/delete.html')
 @group_required('editor')
-def delete(id):
-    page = WikiPage.query.get_or_404(id)
+def delete(title):
+    page = WikiPage.query.filter(WikiPage.title == title).first_or_404()
     form = Form()
 
     if form.validate_on_submit():

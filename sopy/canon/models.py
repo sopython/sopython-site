@@ -25,7 +25,7 @@ class CanonItem(HasTags, IDModel):
 
     @property
     def detail_url(self):
-        return url_for('canon.detail', id=self.id)
+        return url_for('canon.detail', id=self)
 
     @property
     def update_url(self):
