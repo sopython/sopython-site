@@ -31,7 +31,7 @@
             <tbody>
                 {% for user in group.users|sort(attribute='display_name') %}
                     <tr>
-                        <td>{{ user.id }}</td>
+                        <td><a href="{{ user.profile_link }}">{{ user.id }}</a></td>
                         <td><img src="{{ user.profile_image }}" alt="" height="24"/> {{ user.display_name }}</td>
                         <td><a href="{{ url_for('admin.groups_remove_user', name=group.name, user_id=user.id) }}" class="btn btn-danger btn-block btn-xs"><i class="fa fa-minus"></i> Remove</a></td>
                     </tr>
