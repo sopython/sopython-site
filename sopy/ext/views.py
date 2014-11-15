@@ -11,6 +11,7 @@ import re
 from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 from werkzeug.routing import BaseConverter
+from werkzeug.urls import Href
 
 
 def template(path=None, **default_context):
@@ -163,10 +164,6 @@ def markdown(text):
 
 class IDSlugConverter(BaseConverter):
     """Matches an int id and optional slug, separated by "/".
-
-    Only the id is returned, the slug is dropped if present.  The id can be negative.  When building a url, pass in the
-    model instance, not the id or slug.  By default the slug is generated from the string representation of the object.
-
     :param attr: name of field to slugify, or None for default of str(instance)
     :param length: max length of slug when building url
     """
@@ -191,6 +188,32 @@ class IDSlugConverter(BaseConverter):
         return '{}/{}'.format(value.id, slug).rstrip('/')
 
 
+def query_update(**kwargs):
+    """Update the query string with new values.
+
+    This is useful, for example, for updating the pagination for a search query.
+
+    :param kwargs: items to add to the query
+    :return: path with updated query
+    """
+
+    q = request.args.copy()
+
+    # can't use update since that appends values to the multi-dict instead of replacing
+    for key, value in kwargs.items():
+        q[key] = value
+
+    return Href(request.path)(q)
+
+
+def view_context():
+    return {
+        'query_update': query_update,
+    }
+
+
 def init_app(app):
-    app.add_template_filter(markdown)
     app.url_map.converters['id_slug'] = IDSlugConverter
+    app.add_template_filter(markdown)
+    app.add_template_global(query_update)
+    app.context_processor(view_context)

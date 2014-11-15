@@ -3,22 +3,19 @@ from flask_wtf import Form
 from sopy import db
 from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
 from sopy.canon import bp
-from sopy.canon.forms import CanonItemForm, CanonItemEditorForm
+from sopy.canon.forms import CanonItemForm, CanonItemEditorForm, CanonSearchForm
 from sopy.canon.models import CanonItem
+from sopy.ext.forms import PaginationForm
 from sopy.ext.views import template, redirect_for
 
 
 @bp.route('/')
 @template('canon/index.html')
 def index():
-    items = CanonItem.query.order_by(CanonItem.title)
+    form = CanonSearchForm()
+    pg = PaginationForm.auto(form.apply())
 
-    if not has_group('editor'):
-        items = items.filter(db.not_(CanonItem.draft))
-
-    items = items.all()
-
-    return {'items': items}
+    return {'form': form, 'pg': pg}
 
 
 @bp.route('/<id_slug:id>/')

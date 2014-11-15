@@ -1,4 +1,5 @@
 {% extends 'canon/base.html' %}
+{% from "pagination.html" import pagination %}
 
 {% block content %}
     <div class="row"><div class="col-md-12">
@@ -6,16 +7,25 @@
 
         <p class="lead">This is a list of common questions within the Python tag. Each question includes some canonical SO questions that can be used to close-vote any new questions that match. If you have any suggestions then please come <a href="http://chat.stackoverflow.com/rooms/6/python">see us in chat</a>.</p>
 
-        {% if current_user.authenticated %}<ul class="list-inline pull-right">
-            <li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>
-        </ul>{% endif %}
+        <form>
+            <div class="input-group">
+                {{ form.q(class='form-control') }}
+                <span class="input-group-btn"><button type="submit" class="btn"><i class="fa fa-search"></i> Search</button></span>
+            </div>
+        </form><br/>
 
-        <div class="clearfix"></div>
+        <div class="clearfix">
+            <ul class="list-inline pull-left">
+                {% if current_user.authenticated %}<li><a href="{{ url_for('canon.create') }}" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Common Question</a></li>{% endif %}
+            </ul>
+
+            <div class="pull-right">{{ pagination(pg) }}</div>
+        </div>
 
         <table class="table table-striped table-hover">
             <thead>
             </thead>
-            <tbody>{% for item in items %}
+            <tbody>{% for item in pg.items %}
                 <tr>
                     <td>
                         <ul class="list-inline">
@@ -31,5 +41,9 @@
                 </tr>
             {% endfor %}</tbody>
         </table>
+
+        <div class="clearfix">
+            <div class="pull-right">{{ pagination(pg) }}</div>
+        </div>
     </div></div>
 {% endblock %}
