@@ -1,13 +1,13 @@
-"""add profile_image
+"""add profile link
 
-Revision ID: 1f5a6a1a28c
-Revises: 20e76fbc8f6
-Create Date: 2014-08-22 11:15:57.345984
+Revision ID: 2eb4ce026c3
+Revises: 316b5c044f3
+Create Date: 2014-11-16 11:49:38.302856
 """
 
 # revision identifiers, used by Alembic.
-revision = '1f5a6a1a28c'
-down_revision = '20e76fbc8f6'
+revision = '2eb4ce026c3'
+down_revision = '316b5c044f3'
 
 import click
 from alembic import op
@@ -19,7 +19,7 @@ def upgrade():
     from sopy.se_data.models import SEUser
 
     session = Session(bind=op.get_bind())
-    op.add_column('se_user', sa.Column('profile_image', sa.String))
+    op.add_column('se_user', sa.Column('profile_link', sa.String))
 
     with click.progressbar(
         session.query(SEUser).all(),
@@ -28,10 +28,12 @@ def upgrade():
         for user in bar:
             user.se_update()
 
+    session.query(SEUser).filter_by(profile_link=None).update({'profile_link': ''})
+
     session.commit()
 
-    op.alter_column('se_user', 'profile_image', nullable=False)
+    op.alter_column('se_user', 'profile_link', nullable=False)
 
 
 def downgrade():
-    op.drop_column('se_user', 'profile_image')
+    op.drop_column('se_user', 'profile_link')

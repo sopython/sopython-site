@@ -43,7 +43,12 @@ class SEUser(ExternalIDModel):
                 'key': current_app.config.get('SE_API_KEY'),
                 'site': 'stackoverflow',
             })
-            data = r.json()['items'][0]
+            items = r.json()['items']
+
+            if not items:
+                return self
+
+            data = items[0]
 
         self.display_name = data['display_name']
         self.profile_image = data['profile_image']
