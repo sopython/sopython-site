@@ -5,4 +5,6 @@ bp = Blueprint('sodata', __name__)
 
 @bp.record_once
 def register(state):
-    from sopy.se_data import models
+    from . import commands
+
+    state.app.cli.add_command(commands.cli, 'se')
