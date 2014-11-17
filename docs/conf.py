@@ -1,3 +1,5 @@
+from sopy import __version__
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -24,7 +26,7 @@ copyright = '2014, sopython organization'
 # built documents.
 #
 # The short X.Y version.
-version = '1.2.3-dev'
+version = __version__
 # The full version, including alpha/beta/rc tags.
 release = version
 
