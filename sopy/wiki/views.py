@@ -1,4 +1,4 @@
-from flask import redirect
+from flask import redirect, abort
 from flask_wtf import Form
 from sopy import db
 from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
@@ -36,7 +36,7 @@ def detail(title):
 def update(title=None):
     page = WikiPage.query.filter(WikiPage.title == title).first_or_404() if title is not None else None
 
-    if not (page is None or page.draft or page.community):
+    if current_user.reputation < 100 or not (page is None or page.draft or page.community):
         require_group('editor')
 
     form = WikiPageEditorForm(obj=page) if has_group('editor') else WikiPageForm(obj=page)

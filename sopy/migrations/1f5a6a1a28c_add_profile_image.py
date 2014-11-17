@@ -28,8 +28,8 @@ def upgrade():
         for user in bar:
             user.se_update()
 
+    session.query(SEUser).filter_by(profile_image=None).update({'profile_image': ''})
     session.commit()
-
     op.alter_column('se_user', 'profile_image', nullable=False)
 
 

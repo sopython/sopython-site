@@ -1,5 +1,6 @@
-from flask import redirect
+from flask import redirect, abort
 from flask_wtf import Form
+from sqlalchemy.sql.functions import user
 from sopy import db
 from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
 from sopy.canon import bp
@@ -33,7 +34,7 @@ def detail(id):
 def update(id=None):
     item = CanonItem.query.get_or_404(id) if id is not None else None
 
-    if not (item is None or item.draft or item.community):
+    if current_user.reputation < 100 or not (item is None or item.draft or item.community):
         require_group('editor')
 
     form = CanonItemEditorForm(obj=item) if has_group('editor') else CanonItemForm(obj=item)
