@@ -41,14 +41,11 @@ def create_app(info=None):
     app.register_blueprint(pages.bp, url_prefix='/pages')
     app.register_blueprint(admin.bp, url_prefix='/admin')
 
-    from sopy.ext.views import template
-
     @app.route('/')
-    @template('index.html')
     def index():
         from sopy.salad.models import Salad
 
-        return {'wod': Salad.word_of_the_day()}
+        return render_template('index.html', wod=Salad.word_of_the_day())
 
     @app.errorhandler(403)
     def forbidden(e):

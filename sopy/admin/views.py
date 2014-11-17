@@ -1,7 +1,8 @@
+from flask import render_template
 from sopy import db
 from sopy.admin import bp
 from sopy.admin.forms import UserListForm
-from sopy.ext.views import template, redirect_for
+from sopy.ext.views import redirect_for
 from sopy.auth.models import User, Group
 from sopy.auth.login import group_required
 
@@ -13,13 +14,11 @@ def authorize():
 
 
 @bp.route('/groups/')
-@template('admin/groups/index.html')
 def groups_index():
-    return {'groups': Group.query.order_by(Group.name).all()}
+    return render_template('admin/groups/index.html', groups=Group.query.order_by(Group.name).all())
 
 
 @bp.route('/groups/<name>/', methods=['GET', 'POST'])
-@template('/admin/groups/detail.html')
 def groups_detail(name):
     group = Group.query.options(db.joinedload(Group.users)).filter(Group.name == name).first_or_404()
     form = UserListForm()
@@ -30,7 +29,7 @@ def groups_detail(name):
 
         return redirect_for('admin.groups_detail', name=name)
 
-    return {'group': group, 'form': form}
+    return render_template('admin/groups/detail.html', group=group, form=form)
 
 
 @bp.route('/groups/<name>/remove/<int:user_id>')

@@ -1,6 +1,6 @@
 import os
-from flask import current_app
-from sopy.ext.views import template, redirect_for
+from flask import current_app, render_template
+from sopy.ext.views import redirect_for
 from sopy.pages import bp
 
 
@@ -19,9 +19,8 @@ def iter_pages():
 
 
 @bp.route('/')
-@template('pages/index.html')
 def index():
-    return {'names': sorted(iter_pages())}
+    return render_template('pages/index.html', names=sorted(iter_pages()))
 
 
 # name: context function
@@ -54,7 +53,6 @@ page_aliases = {
 
 
 @bp.route('/<name>')
-@template()
 def page(name):
     name = page_aliases.get(name, name)
 
@@ -62,7 +60,4 @@ def page(name):
     if name not in iter_pages():
         return redirect_for('pages.index')
 
-    context = {'_template': 'pages/{}.html'.format(name)}
-    context.update(page_contexts.get(name, lambda: {})())
-
-    return context
+    return render_template('pages/{}.html'.format(name), **page_contexts.get(name, lambda: {})())

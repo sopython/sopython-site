@@ -1,16 +1,15 @@
 from urllib.parse import urlencode, parse_qs
-from flask import url_for, redirect, request, session, current_app, g
+from flask import url_for, redirect, request, session, current_app, render_template
 import requests
 from sopy import db
 from sopy.auth import bp
 from sopy.auth.forms import LoginForm
 from sopy.auth.login import login_user, logout_user
 from sopy.auth.models import User
-from sopy.ext.views import redirect_for, redirect_next, template
+from sopy.ext.views import redirect_for, redirect_next
 
 
 @bp.route('/login', methods=['GET', 'POST'])
-@template('auth/login.html')
 def login():
     if current_app.debug and 'SE_CONSUMER_KEY' not in current_app.config:
         form = LoginForm()
@@ -21,7 +20,7 @@ def login():
 
             return redirect_next()
 
-        return {'form': form}
+        return render_template('auth/login.html', form=form)
 
     qs = urlencode({
         'client_id': current_app.config['SE_CONSUMER_KEY'],

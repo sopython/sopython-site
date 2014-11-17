@@ -1,26 +1,24 @@
-from flask import request
+from flask import request, render_template
 from flask_wtf import Form
 from sopy import db
 from sopy.auth.login import group_required, current_user
-from sopy.ext.views import template, redirect_for
+from sopy.ext.views import redirect_for
 from sopy.salad import bp
 from sopy.salad.forms import SaladForm
 from sopy.salad.models import Salad
 
 
 @bp.route('/')
-@template('salad/index.html')
 def index():
     items = Salad.query.order_by(Salad.position).all()
     wod = Salad.word_of_the_day()
     highlight = request.args.get('highlight', '')
 
-    return {'items': items, 'wod': wod, 'highlight': highlight}
+    return render_template('salad/index.html', items=items, wod=wod, highlight=highlight)
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
 @bp.route('/<int:id>/update', methods=['GET', 'POST'])
-@template('salad/update.html')
 @group_required('Dark Council')
 def update(id=None):
     item = Salad.query.get_or_404(id) if id is not None else None
@@ -37,7 +35,7 @@ def update(id=None):
 
         return redirect_for('salad.index')
 
-    return {'item': item, 'form': form}
+    return render_template('salad/update.html', item=item, form=form)
 
 
 @bp.route('/<int:id>/move_up', endpoint='move_up')
@@ -57,7 +55,6 @@ def move(id, down=False):
 
 
 @bp.route('/<int:id>/delete', methods=['GET', 'POST'])
-@template('salad/delete.html')
 @group_required('Dark Council')
 def delete(id):
     item = Salad.query.get_or_404(id)
@@ -69,4 +66,4 @@ def delete(id):
 
         return redirect_for('salad.index')
 
-    return {'item': item, 'form': form}
+    return render_template('salad/delete.html', item=item, form=form)
