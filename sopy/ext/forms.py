@@ -1,7 +1,17 @@
 import re
 from flask import request
-from wtforms import Field, Form as BaseForm, IntegerField
+from wtforms import Field, Form as BaseForm, IntegerField, StringField
 from wtforms.widgets import TextInput
+
+
+class StripStringField(StringField):
+    """String field that strips whitespace before validating."""
+
+    def process_formdata(self, valuelist):
+        self.data = valuelist[0].strip() if valuelist else ''
+
+        if not self.data:
+            self.raw_data = []
 
 
 class SeparatedField(Field):
@@ -42,11 +52,14 @@ class SeparatedField(Field):
             self.data = self.collection(self.getter(x) for x in value)
 
     def process_formdata(self, valuelist):
-        if not valuelist or not valuelist[0]:
+        raw = valuelist[0].strip() if valuelist else ''
+
+        if not raw:
             self.data = self.collection()
+            self.raw_data = []
             return
 
-        items = self.pattern.split(valuelist[0])
+        items = self.pattern.split(raw)
 
         if not items:
             self.data = self.collection()

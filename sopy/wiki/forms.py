@@ -1,13 +1,14 @@
 from flask_wtf import Form
 import re
-from wtforms.fields import StringField, TextAreaField, BooleanField
+from wtforms.fields import TextAreaField, BooleanField
 from wtforms.validators import DataRequired, ValidationError
 from sopy import db
+from sopy.ext.forms import StripStringField
 from sopy.wiki.models import WikiPage
 
 
 class WikiPageForm(Form):
-    title = StringField(validators=[DataRequired()])
+    title = StripStringField(validators=[DataRequired()])
     body = TextAreaField()
 
     space_re = re.compile(r'\s+')

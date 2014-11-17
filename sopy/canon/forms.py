@@ -1,19 +1,19 @@
 from flask import request
 from flask_wtf import Form
 from wtforms import Form as BaseForm
-from wtforms.fields import StringField, TextAreaField
+from wtforms.fields import TextAreaField
 from wtforms.fields.core import BooleanField
 from wtforms.validators import InputRequired
 from wtforms.widgets.core import TextArea
 from sopy import db
 from sopy.auth.login import has_group
 from sopy.canon.models import CanonItem
-from sopy.ext.forms import SeparatedField
+from sopy.ext.forms import SeparatedField, StripStringField
 from sopy.tags.models import Tag
 
 
 class CanonItemForm(Form):
-    title = StringField(validators=[InputRequired()])
+    title = StripStringField(validators=[InputRequired()])
     excerpt = TextAreaField()
     body = TextAreaField()
     tags = SeparatedField()
@@ -26,7 +26,7 @@ class CanonItemEditorForm(CanonItemForm):
 
 
 class CanonSearchForm(BaseForm):
-    q = StringField()
+    q = StripStringField()
 
     def __init__(self, formdata=None, *args, **kwargs):
         if formdata is None:
@@ -47,13 +47,13 @@ class CanonSearchForm(BaseForm):
         self.validate()
         query = query if query is not None else self.query()
 
-        if not self.q.data or not self.q.data.strip():
+        if not self.q.data:
             return query
 
         tags = []
         terms = []
 
-        for token in self.q.data.strip().split():
+        for token in self.q.data.split():
             if token.startswith('[') and token.endswith(']'):
                 tags.append(token[1:-1])
             elif token.startswith('is:'):

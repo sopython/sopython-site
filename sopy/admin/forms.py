@@ -1,12 +1,12 @@
 from flask_wtf import Form
-from wtforms.fields import StringField
 from wtforms.validators import ValidationError, InputRequired
 from sopy import db
 from sopy.auth.models import User
+from sopy.ext.forms import StripStringField
 
 
 class UserListForm(Form):
-    user_ids = StringField('User IDs', validators=[InputRequired()])
+    user_ids = StripStringField('User IDs', validators=[InputRequired()])
 
     def validate_user_ids(self, field):
         raw_ids = field.data.split()
