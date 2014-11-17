@@ -12,6 +12,7 @@ from pygments.lexers import get_lexer_by_name
 from pygments.util import ClassNotFound
 from werkzeug.routing import BaseConverter
 from werkzeug.urls import Href
+from sopy import __version__
 
 
 def template(path=None, **default_context):
@@ -209,6 +210,7 @@ def query_update(**kwargs):
 def view_context():
     return {
         'query_update': query_update,
+        '__version__': __version__
     }
 
 
