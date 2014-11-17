@@ -6,11 +6,12 @@ from sopy import create_app
 cli = FlaskGroup(create_app=create_app)
 
 
-@cli.command('shell', short_help='Runs a shell in the app context.')
+@cli.command('shell')
 @click.option('--plain', is_flag=True, help='Use a plain shell even if iPython is installed.')
 @with_appcontext
 def shell_command(plain=False):
-    """Run a Python shell in the Flask application context."""
+    """Run a Python shell in the app context."""
+
     try:
         import IPython
     except ImportError:

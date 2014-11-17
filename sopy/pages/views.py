@@ -6,6 +6,7 @@ from sopy.pages import bp
 
 def iter_pages():
     """Get all available pages from the current app's templates."""
+
     # get all templates under 'pages/'
     names = (path[6:] for path in current_app.jinja_env.list_templates() if path.startswith('pages/'))
     # split the extension, check if it's allowed
@@ -37,6 +38,7 @@ def register_context(name):
     :param name: page name
     :return: context function decorator
     """
+
     def decorator(func):
         page_contexts[name] = func
 

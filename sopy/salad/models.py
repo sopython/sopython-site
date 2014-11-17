@@ -28,6 +28,7 @@ class Salad(IDModel):
         :param ts: get word for this datetime, or None for now
         :return: instance
         """
+
         if ts is None:
             ts = datetime.utcnow()
 

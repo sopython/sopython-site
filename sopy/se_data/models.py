@@ -75,6 +75,7 @@ class SEQuestion(HasTags, ExternalIDModel):
         :param ident: question id or link
         :return: instance populated loaded data
         """
+
         try:
             id = int(ident)
         except ValueError:
@@ -99,6 +100,7 @@ class SEQuestion(HasTags, ExternalIDModel):
         :param data: pre-requested data, or None to load the data now
         :return: updated instance
         """
+
         if data is None:
             r = requests.get(questions_url.format(self.id), params={
                 'key': current_app.config.get('SE_API_KEY'),

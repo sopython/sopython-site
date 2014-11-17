@@ -5,15 +5,17 @@ from sqlalchemy.ext.declarative import DeclarativeMeta as BaseDeclarativeMeta, d
 from sqlalchemy.orm import was_deleted
 
 
-class EqMixin(object):
+class EqMixin:
     """Compare and hash objects by custom values."""
 
     def compare_value(self):
         """Return what will be used to compare instances."""
+
         return inspect(type(self)).identity
 
     def __eq__(self, other):
         """Instances of same class with equal compare values are equal."""
+
         if not isinstance(other, self.__class__):
             return NotImplemented
 
@@ -29,10 +31,11 @@ class EqMixin(object):
 
     def __hash__(self):
         """Composite hash of class and compare value."""
+
         return hash(self.__class__) ^ hash(self.compare_value())
 
 
-class UniqueMixin(object):
+class UniqueMixin:
     """Keep a cache of unique instances in memory so new instances can be safely created in bulk before they are committed."""
 
     @classmethod
@@ -62,8 +65,8 @@ class UniqueMixin(object):
 class DeclarativeMeta(BaseDeclarativeMeta):
     def __init__(cls, name, bases, attrs):
         """Handle Flask-SQLAlchemy's bind_key without setting tablename."""
-        bind_key = attrs.pop('__bind_key__', None)
 
+        bind_key = attrs.pop('__bind_key__', None)
         BaseDeclarativeMeta.__init__(cls, name, bases, attrs)
 
         if bind_key is not None:
