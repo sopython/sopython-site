@@ -42,7 +42,6 @@ def create_app(info=None):
     app.register_blueprint(admin.bp, url_prefix='/admin')
     app.register_blueprint(transcript.bp, url_prefix='/transcript')
 
-
     @app.route('/')
     def index():
         from sopy.salad.models import Salad
