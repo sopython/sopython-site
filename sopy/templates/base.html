@@ -53,7 +53,6 @@
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
         <script type="text/javascript">
             // https://gist.github.com/duncansmart/5267653
-
             $('textarea[data-editor]').each(function() {
                 var textarea = $(this);
                 var mode = textarea.data('editor');
@@ -86,16 +85,17 @@
     {% endif %}
 
     {% block script %}{% endblock %}
-    {% block ga %}
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-        ga('create', 'UA-56852429-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-    {% endblock %}
+    {% block analytics %}{% if config['GOOGLE_ANALYTICS_KEY'] %}
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', '{{ config['GOOGLE_ANALYTICS_KEY'] }}', 'auto');
+            ga('send', 'pageview');
+        </script>
+    {% endif %}{% endblock %}
 </body>
 </html>
