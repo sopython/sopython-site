@@ -20,7 +20,7 @@ def index():
     return render_template('wiki/index.html', pages=pages)
 
 
-@bp.route('/<title>/')
+@bp.route('/<wiki_title:title>/')
 def detail(title):
     page = WikiPage.query.filter(WikiPage.title == title).first_or_404()
 
@@ -28,7 +28,7 @@ def detail(title):
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
-@bp.route('/<title>/update', methods=['GET', 'POST'])
+@bp.route('/<wiki_title:title>/update', methods=['GET', 'POST'])
 @login_required
 def update(title=None):
     page = WikiPage.query.filter(WikiPage.title == title).first_or_404() if title is not None else None
@@ -53,7 +53,7 @@ def update(title=None):
 
 
 
-@bp.route('/<title>/delete', methods=['GET', 'POST'])
+@bp.route('/<wiki_title:title>/delete', methods=['GET', 'POST'])
 @group_required('editor')
 def delete(title):
     page = WikiPage.query.filter(WikiPage.title == title).first_or_404()

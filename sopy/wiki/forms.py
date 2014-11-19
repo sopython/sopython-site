@@ -12,7 +12,7 @@ class WikiPageForm(Form):
     body = TextAreaField()
 
     space_re = re.compile(r'\s+')
-    invalid_re = re.compile(r'(^\.{1,2}$|/|%[0-9a-f]{2}|&#?[0-9a-z]+?;)', re.I)
+    invalid_re = re.compile(r'(^\.{1,2}$|[/_]|%[0-9a-f]{2}|&#?[0-9a-z]+?;)', re.I)
 
     def validate_title(self, field):
         field.data = title = self.space_re.sub(field.data, ' ').strip()

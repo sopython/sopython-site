@@ -129,6 +129,7 @@ def markdown(text):
 
 class IDSlugConverter(BaseConverter):
     """Matches an int id and optional slug, separated by "/".
+
     :param attr: name of field to slugify, or None for default of str(instance)
     :param length: max length of slug when building url
     """
@@ -151,6 +152,20 @@ class IDSlugConverter(BaseConverter):
         slug = parameterize(raw)[:self.length].rstrip('-')
 
         return '{}/{}'.format(value.id, slug).rstrip('/')
+
+
+class WikiTitleConverter(BaseConverter):
+    """Matches words separated by spaces or underscores.
+
+    When parsing the url, underscores are converted to spaces.
+    When building the url, spaces are converted to underscores.
+    """
+
+    def to_python(self, value):
+        return value.replace('_', ' ')
+
+    def to_url(self, value):
+        return value.replace(' ', '_')
 
 
 def query_update(**kwargs):
@@ -180,6 +195,7 @@ def view_context():
 
 def init_app(app):
     app.url_map.converters['id_slug'] = IDSlugConverter
+    app.url_map.converters['wiki_title'] = WikiTitleConverter
     app.add_template_filter(markdown)
     app.add_template_global(query_update)
     app.context_processor(view_context)
