@@ -19,7 +19,16 @@ class SEUser(ExternalIDModel):
         return self.display_name
 
     @classmethod
-    def se_load(cls, ident):
+    def se_load(cls, ident, update=True):
+        """Load a user by id.  If the user is not in the database, retrieve them with the API.
+
+        If the same user may be (re-)cached multiple times in one operation, you can pass `update=False` to only retrieve the data from the API if the user hasn't been cached.
+
+        :param ident: user id to load
+        :param update: if False, an API call will only be made if this user hasn't been cached
+        :return: user instance
+        """
+
         try:
             id = int(ident)
         except ValueError:
@@ -27,16 +36,12 @@ class SEUser(ExternalIDModel):
             id = int(match.group(1))
 
         o = cls.get_unique(id=id)
-        r = requests.get(users_url.format(id), params={
-            'key': current_app.config.get('SE_API_KEY'),
-            'site': 'stackoverflow',
-        })
-        items = r.json()['items']
 
-        if not items:
-            return None
+        # only update if told to or if the instance hasn't been cached
+        if update or o.display_name is None:
+            o.se_update()
 
-        return o.se_update(items[0])
+        return o
 
     def se_update(self, data=None):
         if data is None:
@@ -45,16 +50,20 @@ class SEUser(ExternalIDModel):
                 'site': 'stackoverflow',
             })
             items = r.json()['items']
+            data = items[0] if items else False
 
-            if not items:
-                return self
-
-            data = items[0]
-
-        self.display_name = data['display_name']
-        self.profile_image = data['profile_image']
-        self.profile_link = data['link']
-        self.reputation = data['reputation']
+        if data is False and self.display_name is None:
+            # this user hasn't been cached, but can't be retrieved from the API
+            # so create a dummy user
+            self.display_name = 'user{}'.format(self.id)
+            self.profile_image = ''
+            self.profile_link = ''
+            self.reputation = -1
+        elif data:
+            self.display_name = data['display_name']
+            self.profile_image = data['profile_image']
+            self.profile_link = data['link']
+            self.reputation = data['reputation']
 
         return self
 
