@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus
 from flask import url_for
 from sopy import db
 from sopy.ext.models import IDModel
@@ -25,6 +26,11 @@ class Transcript(IDModel):
     @property
     def delete_url(self):
         return url_for('transcript.delete', id=self.id)
+
+    @property
+    def local_time_url(self):
+        query = quote_plus('{} utc in local time'.format(self.ts.strftime('%Y-%m-%d %H:%M')))
+        return 'http://www.wolframalpha.com/input?i={}'.format(query)
 
 
 transcript_message = db.Table(

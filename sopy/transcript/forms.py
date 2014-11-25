@@ -1,17 +1,14 @@
 from datetime import datetime
 from flask_wtf import Form
-from pytz import utc
 from requests import RequestException
 from wtforms.fields import StringField, DateTimeField, TextAreaField, IntegerField
 from wtforms.validators import Optional, InputRequired
 from sopy.transcript.parser import get_range
 
-dt_utc = lambda data: data.replace(tzinfo=utc) if data is not None else None
-
 
 class CreateTranscriptForm(Form):
     title = StringField(validators=[InputRequired()])
-    ts = DateTimeField('When', format='%Y-%m-%d %H:%M', filters=[dt_utc], validators=[Optional()])
+    ts = DateTimeField('When', format='%Y-%m-%d %H:%M', validators=[Optional()])
     body = TextAreaField('Description')
     start = IntegerField(validators=[Optional()])
     end = IntegerField(validators=[Optional()])
@@ -21,7 +18,7 @@ class CreateTranscriptForm(Form):
         ts = self.ts.data
         start = self.start.data
         end = self.end.data
-        now = datetime.utcnow().replace(tzinfo=utc)
+        now = datetime.utcnow()
 
         if ts is None and start is None:
             self.ts.errors.append('Must specify either a future event time or a message range.')
@@ -61,7 +58,7 @@ class CreateTranscriptForm(Form):
 
 class UpdateTranscriptForm(Form):
     title = StringField(validators=[InputRequired()])
-    ts = DateTimeField('When', format='%Y-%m-%d %H:%M', filters=[dt_utc], validators=[Optional()])
+    ts = DateTimeField('When', format='%Y-%m-%d %H:%M', validators=[Optional()])
     body = TextAreaField('Description')
 
     def process(self, formdata=None, obj=None, data=None, **kwargs):

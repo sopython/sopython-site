@@ -6,7 +6,7 @@ from sopy.ext.models import ExternalIDModel
 from sopy.tags.models import HasTags
 
 users_url = 'https://api.stackexchange.com/2.2/users/{}'
-user_id_re = re.compile(r'/u(?:sers)?/([0-9]+)')
+user_id_re = re.compile(r'/u(?:sers)?/(-?[0-9]+)')
 
 
 class SEUser(ExternalIDModel):

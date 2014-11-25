@@ -1,7 +1,6 @@
 from calendar import day_abbr, month_abbr
 from datetime import date, time, datetime, timedelta
 import re
-from pytz import utc
 import requests
 from sopy import db
 from sopy.ext.models import ExternalIDModel
@@ -99,7 +98,7 @@ class ChatMessage(ExternalIDModel):
             hour += 12
 
         # build a utc timestamp from the date and the time
-        o.ts = datetime.combine(ts_date, time(hour, minute, tzinfo=utc))
+        o.ts = datetime.combine(ts_date, time(hour, minute))
 
         if element.find(class_='partial') is not None:
             # this is a "see full text" message, load the full unrendered message

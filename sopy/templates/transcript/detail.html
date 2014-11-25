@@ -11,6 +11,7 @@
             </ul>
         </div>
 
+        <p>{% if item.messages %}Took{% else %}Takes{% endif %} place on <a href="{{ item.local_time_url }}">{{ item.ts.strftime('%Y-%m-%d %H:%M') }}</a></p>
         {% if item.body %}{{ item.body|markdown }}{% endif %}
 
         {% for message in item.messages %}
