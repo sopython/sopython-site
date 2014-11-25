@@ -11,7 +11,7 @@ hoep==1.0.2
 inflection==0.2.1
 itsdangerous==0.24
 Jinja2==2.7.3
-lxml==3.4.0
+lxml==3.4.1
 Mako==1.0.0
 MarkupSafe==0.23
 psycopg2==2.5.4
