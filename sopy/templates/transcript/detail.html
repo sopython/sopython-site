@@ -1,0 +1,28 @@
+{% extends 'transcript/base.html' %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}{{ item.title }}{% endblock %}</h2>
+
+        <div class="clearfix">
+            <ul class="list-inline pull-left">
+                {% if has_group('Dark Council') %}<li><a href="{{ item.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>
+                <li><a href="{{ item.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>{% endif %}
+            </ul>
+        </div>
+
+        {% if item.body %}{{ item.body|markdown }}{% endif %}
+
+        {% for message in item.messages %}
+            <div class="well well-sm">
+                <ul class="list-inline">
+                    <li><a href="{{ message.user.profile_link }}"><img src="{{ message.user.profile_image }}" alt="" height="24"/></a></li>
+                    <li><a href="{{ message.user.profile_link }}">{{ message.user.display_name }}</a></li>
+                    <li>{{ message.ts.strftime('%Y-%m-%d %H:%M') }}</li>
+                    {% if message.stars %}<li><i class="fa fa-star"></i> {{ message.stars }}</li>{% endif %}
+                </ul>
+                {% if message.rendered %}{{ message.content|safe }}{% else %}<pre>{{ message.content }}</pre>{% endif %}
+            </div>
+        {% endfor %}
+    </div></div>
+{% endblock %}

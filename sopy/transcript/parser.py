@@ -29,6 +29,10 @@ def previous_page(current):
         element = current.find('link', rel='prev')
 
     if element is None:
+        # no previous day link, maybe this is the second day with a first day link
+        element = current.find('a')
+
+    if element is None:
         # already on the first page
         return None
 
@@ -55,6 +59,13 @@ def next_page(current):
     if element is None:
         # no next time block, check for a next day
         element = current.find('link', rel='next')
+
+    if element is None:
+        # no next day link, maybe this is the second to last day with a last day link
+        if pager is None:
+            element = current.find('div', id='transcript').find_previous('a')
+        else:
+            element = pager.find_previous('a')
 
     if element is None:
         # already on the last day
@@ -85,19 +96,19 @@ def get_range(start_id, end_id):
     """
 
     if end_id < start_id:
-        raise ValueError('end must come after start')
+        raise ValueError('End must come after start.')
 
     # need to check that the range is in the same room, so fetch start and end pages
     r = requests.get(permalink_url.format(start_id))
     r.raise_for_status()
     page = BeautifulSoup(r.content)
-    room_href = page.find('span', class_='room-name').a['href']
+    room_href = page.find('div', id='sidebar-content').find('span', class_='room-name').a['href']
     r = requests.get(permalink_url.format(end_id))
     r.raise_for_status()
     end_page = BeautifulSoup(r.content)
 
-    if room_href != end_page.find('span', class_='room-name').a['href']:
-        raise ValueError('start and end are in different rooms')
+    if room_href != end_page.find('div', id='sidebar-content').find('span', class_='room-name').a['href']:
+        raise ValueError('Start and end are in different rooms.')
 
     # no need to keep the end data around, it must be reloaded anyway during traversal
     del r, end_page
@@ -110,11 +121,11 @@ def get_range(start_id, end_id):
     element = page.find('div', id='message-{}'.format(start_id))
 
     while True:
-        # build a full message from the html
-        out = ChatMessage.html_load(element, room_id, ts_date)
+        # build a full message from the html, skip updating existing messages
+        out = ChatMessage.html_load(element, room_id, ts_date, update=False)
         yield out
 
-        if out.se_id >= end_id:
+        if out.id >= end_id:
             break
 
         # get the next message element on the page

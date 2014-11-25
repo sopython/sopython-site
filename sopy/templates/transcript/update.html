@@ -1,0 +1,64 @@
+{% extends 'transcript/base.html' %}
+
+{% set script_ace = True %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <h2 class="page-header">{% block title %}{% if item is none %}Add Transcript{% else %}Edit {{ item.title }}{% endif %}{% endblock %}</h2>
+
+        <form method="post" class="form-horizontal">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.title.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.title(class='form-control') }}</div>
+            </div>
+            <div class="form-group">
+                {{ form.ts.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.ts(class='form-control') }}</div>
+            </div>
+            <div class="form-group">
+                {{ form.body.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.body(class='form-control', **{'data-editor': 'markdown'}) }}</div>
+            </div>
+            {% if not item.messages %}<div class="form-group">
+                {{ form.start.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.start(class='form-control') }}</div>
+            </div>
+            <div class="form-group">
+                {{ form.end.label(class='control-label col-sm-2') }}
+                <div class="col-sm-10">{{ form.end(class='form-control') }}</div>
+            </div>
+            {% else %}
+                <div class="form-group"><div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                    <a href="{% if item is none %}{{ url_for('transcript.index') }}{% else %}{{ item.detail_url }}{% endif %}" class="btn btn-default">Cancel</a>
+                </div></div>
+
+                <p>Check any messages that should be removed from the transcript.</p>
+
+                <table class="table table-striped table-hover table-condensed">
+                    <thead>
+                        <tr>
+                            <th><i class="fa fa-times"></i></th>
+                            <th>User</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for message in item.messages %}
+                            <tr>
+                                <td><input type="checkbox" name="remove-{{ message.id }}"/></td>
+                                <td>{{ message.user.display_name }}</td>
+                                <td>{% if message.rendered %}{{ message.content|safe }}{% else %}<pre>{{ message.content }}</pre>{% endif %}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <div class="form-group"><div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Save</button>
+                <a href="{% if item is none %}{{ url_for('transcript.index') }}{% else %}{{ item.detail_url }}{% endif %}" class="btn btn-default">Cancel</a>
+            </div></div>
+        </form>
+    </div></div>
+{% endblock %}

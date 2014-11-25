@@ -25,8 +25,8 @@ class ChatMessage(ExternalIDModel):
     user = db.relationship(SEUser, backref='chat_messages')
 
     @classmethod
-    def html_load(cls, element, room_id, ts_date=None):
-        """Create a message by id and updated it from scraped HTML.
+    def html_load(cls, element, room_id, ts_date=None, update=True):
+        """Create a message by id and update it from scraped HTML.
 
         :param element: message element from Beautiful Soup
         :param room_id: needed for fetching "see full text" messages
@@ -36,6 +36,9 @@ class ChatMessage(ExternalIDModel):
 
         id = int(id_re.search(element['id']).group(1))
         o = cls.get_unique(id=id)
+
+        if not update and o.ts is not None:
+            return o
 
         o.room_id = room_id
 
@@ -100,11 +103,11 @@ class ChatMessage(ExternalIDModel):
 
         if element.find(class_='partial') is not None:
             # this is a "see full text" message, load the full unrendered message
-            o.content = requests.get(full_text_url.format(room_id, id)).content
+            o.content = requests.get(full_text_url.format(room_id, id)).text
             o.rendered = False
         else:
             # normal full message
-            o.content = element.find('div', class_='content').renderContents(prettyPrint=True)
+            o.content = element.find('div', class_='content').decode_contents().strip()
             o.rendered = True
 
         stars_elem = element.find('span', class_='stars')
