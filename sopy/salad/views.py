@@ -29,8 +29,8 @@ def update(id=None):
             item = Salad()
             db.session.add(item)
 
-        form.populate_obj(item)
         item.updated_by = current_user
+        form.populate_obj(item)
         db.session.commit()
 
         return redirect_for('salad.index')

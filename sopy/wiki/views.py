@@ -43,8 +43,8 @@ def update(title=None):
             page = WikiPage()
             db.session.add(page)
 
-        form.populate_obj(page)
         page.author = current_user
+        form.populate_obj(page)
         db.session.commit()
 
         return redirect(page.detail_url)

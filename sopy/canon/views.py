@@ -40,8 +40,8 @@ def update(id=None):
             item = CanonItem()
             db.session.add(item)
 
-        form.populate_obj(item)
         item.updated_by = current_user
+        form.populate_obj(item)
         db.session.commit()
 
         return redirect(item.detail_url)
