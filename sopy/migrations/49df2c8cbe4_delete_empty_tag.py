@@ -22,8 +22,11 @@ def upgrade():
     for item in session.query(CanonItem).join(CanonItem._tags).filter(Tag.name == ''):
         item.tags.discard('')
 
-    empty_tag = session.query(Tag).filter_by(name='').one()
-    session.delete(empty_tag)
+    empty_tag = session.query(Tag).filter_by(name='').first()
+
+    if empty_tag is not None:
+        session.delete(empty_tag)
+
     session.commit()
 
 def downgrade():
