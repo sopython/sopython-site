@@ -110,6 +110,6 @@ class ChatMessage(ExternalIDModel):
             o.rendered = True
 
         stars_elem = element.find('span', class_='stars')
-        o.stars = int(stars_elem.find('span', class_='times').string) if stars_elem is not None else 0
+        o.stars = int(stars_elem.find('span', class_='times').string or 0) if stars_elem is not None else 0
 
         return o
