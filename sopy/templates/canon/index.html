@@ -12,7 +12,17 @@
                 {{ form.q(class='form-control') }}
                 <span class="input-group-btn"><button type="submit" class="btn"><i class="fa fa-search"></i> Search</button></span>
             </div>
-        </form><br/>
+        </form>
+        <div>
+            <button data-toggle="collapse" data-target="#search-rules" type="button" class="btn btn-link"><i class="fa fa-info-circle"></i> How to search</button>
+            <ul id="search-rules" class="collapse">
+                <li>Each space separated value is a separate search term.</li>
+                <li>Terms are ANDed together.</li>
+                <li>[Brackets] indicate a tag term.</li>
+                <li><code>is:draft</code> shows only draft posts.</li>
+                <li><code>is:community</code> shows only community posts.</li>
+            </ul>
+        </div>
 
         <div class="clearfix">
             <ul class="list-inline pull-left">
