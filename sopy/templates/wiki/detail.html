@@ -4,8 +4,8 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{% block title %}{{ page.title }}{% endblock %}</h2>
 
-        {% if item.draft %}<div class="alert alert-warning">This page is in draft mode.  Only editors can see it listed.  Any user with 100 rep with the link may edit it.</div>{% endif %}
-        {% if item.community %}<div class="alert alert-info">This page is in community mode.  Any user with 100 rep may edit it.</div>{% endif %}
+        {% if page.draft %}<div class="alert alert-warning">This page is in draft mode.  Only editors can see it listed.  Any user with 100 rep with the link may edit it.</div>{% endif %}
+        {% if page.community %}<div class="alert alert-info">This page is in community mode.  Any user with 100 rep may edit it.</div>{% endif %}
 
         <ul class="list-inline pull-right">
             <li><small><i>Last edited {{ page.updated|datetimeformat }}</i></small></li>
