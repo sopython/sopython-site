@@ -6,8 +6,8 @@
     <div class="row"><div class="col-md-12">
         <h2 class="page-header">{{ item.title|markdown }}</h2>
 
-        {% if item.draft %}<div class="alert alert-warning">This page is in draft mode. Only editors or anyone with the link may view it.</div>{% endif %}
-        {% if item.community %}<div class="alert alert-info">This page is in community mode.  Any logged in users may edit it.</div>{% endif %}
+        {% if item.draft %}<div class="alert alert-warning">This page is in draft mode.  Only editors can see it listed.  Any user with 100 rep with the link may edit it.</div>{% endif %}
+        {% if item.community %}<div class="alert alert-info">This page is in community mode.  Any user with 100 rep may edit it.</div>{% endif %}
 
         <ul class="list-inline pull-right">
             {% if has_group('editor') or item.draft or item.community %}<li><a href="{{ item.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>{% endif %}
