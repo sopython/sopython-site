@@ -5,7 +5,7 @@ from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
 
-__version__ = '1.4.6'
+__version__ = '1.4.7'
 
 alembic = Alembic()
 babel = Babel()
