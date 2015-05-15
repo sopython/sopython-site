@@ -1,11 +1,11 @@
-from flask import Flask, send_file
+from flask import Flask
 from flask import render_template
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
 
-__version__ = '1.4.7'
+__version__ = '1.4.8'
 
 alembic = Alembic()
 babel = Babel()
