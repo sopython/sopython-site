@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_file
 from flask import render_template
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
@@ -47,6 +47,9 @@ def create_app(info=None):
         from sopy.salad.models import Salad
 
         return render_template('index.html', wod=Salad.word_of_the_day())
+
+    app.add_url_rule('/favicon.ico', None, app.send_static_file, defaults={'filename': 'favicon.ico'})
+    app.add_url_rule('/robots.txt', None, app.send_static_file, defaults={'filename': 'robots.txt'})
 
     @app.errorhandler(403)
     def forbidden(e):
