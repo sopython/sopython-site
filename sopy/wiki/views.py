@@ -1,4 +1,4 @@
-from flask import redirect, render_template
+from flask import redirect, render_template, request, session, url_for
 from flask_wtf import Form
 from sopy import db
 from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
@@ -10,7 +10,7 @@ from sopy.wiki.models import WikiPage
 
 @bp.route('/')
 def index():
-    pages = WikiPage.query.order_by(WikiPage.title)
+    pages = WikiPage.query.filter(WikiPage.redirect_id.is_(None)).order_by(WikiPage.title)
 
     if not has_group('editor'):
         pages = pages.filter(db.not_(WikiPage.draft))
@@ -20,11 +20,21 @@ def index():
     return render_template('wiki/index.html', pages=pages)
 
 
-@bp.route('/<wiki_title:title>/')
+@bp.route('/<wiki_title:title>')
 def detail(title):
-    page = WikiPage.query.filter(WikiPage.title == title).first_or_404()
+    page = WikiPage.query.filter(WikiPage.title == title).options(db.joinedload(WikiPage.redirect)).first_or_404()
 
-    return render_template('wiki/detail.html', page=page)
+    if page.redirect and 'no_redirect' not in request.args:
+        session['redirect_from'] = title
+        return redirect(page.redirect.detail_url)
+
+    if 'redirect_from' in session:
+        redirect_from = session['redirect_from']
+        del session['redirect_from']
+    else:
+        redirect_from = None
+
+    return render_template('wiki/detail.html', page=page, redirect_from=redirect_from)
 
 
 @bp.route('/create', endpoint='create', methods=['GET', 'POST'])
@@ -42,6 +52,11 @@ def update(title=None):
         if page is None:
             page = WikiPage()
             db.session.add(page)
+        else:
+            page.redirect = None
+
+            if page.title != form.title.data:
+                db.session.add(WikiPage(title=page.title, body='', redirect=page, author=current_user))
 
         page.author = current_user
         form.populate_obj(page)

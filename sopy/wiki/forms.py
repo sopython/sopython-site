@@ -1,8 +1,8 @@
 from flask_wtf import Form
 import re
+from markupsafe import Markup
 from wtforms.fields import TextAreaField, BooleanField
 from wtforms.validators import DataRequired, ValidationError
-from sopy import db
 from sopy.ext.forms import StripStringField
 from sopy.wiki.models import WikiPage
 
@@ -25,14 +25,12 @@ class WikiPageForm(Form):
         if match:
             raise ValidationError('Invalid characters: "{}"'.format(match.group(1)))
 
-        unique_title_q = db.session.query(db.func.count(WikiPage.id)).filter(WikiPage.title == title)
+        existing = WikiPage.query.filter_by(title=title).first()
 
-        if self.obj is not None:
-            # When editing an existing page, only check *other* pages for duplicate titles.
-            unique_title_q = unique_title_q.filter(WikiPage.id != self.obj.id)
-
-        if unique_title_q.scalar():
-            raise ValidationError('A page with this title already exists.')
+        # check existing title when creating new page
+        # skip if existing page is current page when editing
+        if existing is not None and (self.obj is None or self.obj.id != existing.id):
+            raise ValidationError(Markup('<a href="{}">A page with this title</a> already exists.  Rename or delete it before continuing.'.format(existing.detail_url)))
 
 
 class WikiPageEditorForm(WikiPageForm):

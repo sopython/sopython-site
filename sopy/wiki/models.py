@@ -12,8 +12,10 @@ class WikiPage(IDModel):
     draft = db.Column(db.Boolean, nullable=False, default=False)
     community = db.Column(db.Boolean, nullable=False, default=False)
     author_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=False)
+    redirect_id = db.Column(db.Integer, db.ForeignKey('wiki_page.id'))
 
     author = db.relationship(User)
+    redirect = db.relationship(lambda: WikiPage, remote_side=lambda: (WikiPage.id,), backref='redirects')
 
     def __str__(self):
         return self.title
