@@ -1,4 +1,4 @@
-from urllib.parse import urlparse, urljoin
+from urllib.parse import urlparse, urljoin, quote
 from flask import url_for, redirect, request
 import hoep as h
 from inflection import parameterize
@@ -165,7 +165,7 @@ class WikiTitleConverter(BaseConverter):
         return value.replace('_', ' ')
 
     def to_url(self, value):
-        return value.replace(' ', '_')
+        return quote(value.replace(' ', '_'))
 
 
 def query_update(**kwargs):
