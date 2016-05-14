@@ -97,6 +97,17 @@ class User(UserMixin, SEUser):
 
         return o.se_update(data)
 
+    @classmethod
+    def create_unique(cls, session, id):
+        # if the site user was cached, manually upgrade it to a local user
+        if SEUser.query.get(id) is not None:
+            session.execute(cls.__table__.insert().values(id=id))
+            return cls.query.get(id)
+
+        o = cls(id=id)
+        session.add(o)
+        return o
+
 
 user_group = db.Table(
     'user_group',

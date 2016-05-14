@@ -39,6 +39,13 @@ class UniqueMixin:
     """Keep a cache of unique instances in memory so new instances can be safely created in bulk before they are committed."""
 
     @classmethod
+    def create_unique(cls, session, **kwargs):
+        o = cls(**kwargs)
+        session.add(o)
+        return o
+
+
+    @classmethod
     def get_unique(cls, **kwargs):
         g._unique_cache = cache = getattr(g, '_unique_cache', {})
         key = (cls, tuple(kwargs.items()))
@@ -54,8 +61,7 @@ class UniqueMixin:
                 o = session.query(cls).filter_by(**kwargs).first()
 
             if o is None:
-                o = cls(**kwargs)
-                session.add(o)
+                o = cls.create_unique(session, **kwargs)
 
             cache[key] = o
 

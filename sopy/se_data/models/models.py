@@ -16,7 +16,7 @@ class SEUser(ExternalIDModel):
     reputation = db.Column(db.Integer, nullable=False)
 
     def __str__(self):
-        return self.display_name
+        return '{} {}'.format(self.id, self.display_name)
 
     @classmethod
     def se_load(cls, ident, update=True):
