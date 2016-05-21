@@ -1,4 +1,4 @@
-from urllib.parse import urlencode, parse_qs
+from urllib.parse import urlencode, parse_qs, quote
 from flask import url_for, redirect, request, session, current_app, render_template
 import requests
 from sopy import db
@@ -22,9 +22,10 @@ def login():
 
         return render_template('auth/login.html', form=form)
 
+    next = quote(quote(request.args['next'])) if 'next' in request.args else None
     qs = urlencode({
         'client_id': current_app.config['SE_CONSUMER_KEY'],
-        'redirect_uri': url_for('auth.authorized', next=request.args.get('next'), _external=True)
+        'redirect_uri': url_for('auth.authorized', next=next, _external=True)
     })
     url = 'https://stackexchange.com/oauth?{}'.format(qs)
 
@@ -33,11 +34,12 @@ def login():
 
 @bp.route('/login/authorized')
 def authorized():
+    next = quote(quote(request.args['next'])) if 'next' in request.args else None
     r = requests.post('https://stackexchange.com/oauth/access_token', {
         'client_id': current_app.config['SE_CONSUMER_KEY'],
         'client_secret': current_app.config['SE_CONSUMER_SECRET'],
         'code': request.args['code'],
-        'redirect_uri': url_for('auth.authorized', next=request.args.get('next'), _external=True)
+        'redirect_uri': url_for('auth.authorized', next=next, _external=True)
     })
 
     session['oauth_token'] = parse_qs(r.text)['access_token'][0]
