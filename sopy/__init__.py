@@ -1,3 +1,6 @@
+import logging
+
+import sys
 from flask import Flask
 from flask import render_template
 from flask_alembic import Alembic
@@ -64,5 +67,10 @@ def create_app(info=None):
     @app.errorhandler(500)
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
+
+    if not app.debug:
+        handler = logging.StreamHandler(sys.stderr)
+        handler.setLevel(logging.ERROR)
+        app.logger.addHander(handler)
 
     return app
