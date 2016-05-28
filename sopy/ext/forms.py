@@ -1,6 +1,6 @@
 import re
 from flask import request
-from wtforms import Field, Form as BaseForm, IntegerField, StringField
+from wtforms import Field, Form as BaseForm, IntegerField, StringField, TextAreaField
 from wtforms.widgets import TextInput
 
 
@@ -12,6 +12,10 @@ class StripStringField(StringField):
 
         if not self.data:
             self.raw_data = []
+
+
+class StripTextAreaField(StripStringField, TextAreaField):
+    pass
 
 
 class SeparatedField(Field):

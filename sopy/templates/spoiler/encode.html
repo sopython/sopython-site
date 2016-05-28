@@ -1,0 +1,37 @@
+{% extends 'salad/base.html' %}
+
+{% set script_ace = True %}
+
+{% block title %}Spoiler Obfuscator{% endblock %}
+
+{% block content %}
+    <div class="row"><div class="col-md-12">
+        <form method="post" class="form-horizontal">
+            <div class="form-group">
+                {{ form.message.label(class='control-label col-md-2') }}
+                <div class="col-md-10">{{ form.message(class='form-control', data_editor='markdown') }}</div>
+            </div>
+            <div class="form-group"><div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-eye-slash"></i> Encode</button>
+            </div></div>
+        </form>
+    </div>
+    {% if encoded %}<div class="col-md-12">
+        <dl class="dl-horizontal">
+            <dt>URL</dt>
+            <dd>{{ url|urlize(40) }}</dd>
+            <dt>Markup</dt>
+            <dd><pre>[view spoiler]({{ url }})</pre></dd>
+        </dl>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#output-rendered" data-toggle="tab">Rendered</a></li>
+            <li><a href="#output-raw" data-toggle="tab">Raw</a></li>
+            <li><a href="#output-encoded" data-toggle="tab">Encoded</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="output-rendered"><br/><div class="well well-sm">{{ message|markdown }}</div></div>
+            <div class="tab-pane" id="output-raw"><br/><pre>{{ message }}</pre></div>
+            <div class="tab-pane" id="output-encoded"><br/><pre>{{ encoded }}</pre></div>
+        </div>
+    </div>{% endif %}</div>
+{% endblock %}
