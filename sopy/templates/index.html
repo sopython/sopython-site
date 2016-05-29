@@ -5,13 +5,15 @@
 {% block content %}
     <div class="row"><div class="col-md-12">
         <div class="jumbotron">
-            <h2>Cabbage, World!</h2>
+            <h2>print('Hello, World!')</h2>
             <p>Welcome to <strong>so</strong>python, the website of the Python community on <a href="http://stackoverflow.com/">Stack Overflow</a>.</p>
             <p>Join us for chat in the <a href="http://chat.stackoverflow.com/rooms/6/python">Python room</a>!</p>
         </div>
-
-        {% if wod %}<div class="panel panel-info">
-            <div class="panel-body">The word of the day is "<a href="{{ wod.highlight_url }}"><strong>{{ wod.term }}</strong></a>"!</div>
-        </div>{% endif %}
+        <div class="panel panel-info">
+            <div class="panel-heading">PyCon US 2016</div>
+            <div class="panel-body"><p><a href="{{ url_for('pycon2016') }}">We're at PyCon!</a>
+                David Lord (@davidism) is planning open spaces and meetups.
+                Ping @davidism in chat for more information.</p></div>
+        </div>
     </div></div>
 {% endblock %}

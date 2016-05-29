@@ -1,10 +1,8 @@
 import logging
-
 import sys
-
 import pkg_resources
 from flask import Flask
-from flask import render_template
+from flask import render_template, url_for, redirect
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
@@ -17,7 +15,7 @@ babel = Babel()
 db = SQLAlchemy()
 
 
-def create_app():
+def create_app(info=None):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object('sopy.config')
     app.config.from_pyfile('config.py', True)
@@ -50,9 +48,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        from sopy.salad.models import Salad
-
-        return render_template('index.html', wod=Salad.word_of_the_day())
+        return render_template('index.html')
 
     app.add_url_rule('/favicon.ico', None, app.send_static_file, defaults={'filename': 'favicon.ico'})
     app.add_url_rule('/robots.txt', None, app.send_static_file, defaults={'filename': 'robots.txt'})
@@ -63,16 +59,19 @@ def create_app():
 
     @app.errorhandler(404)
     def not_found(e):
-
         return render_template('errors/404.html'), 404
 
     @app.errorhandler(500)
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
 
+    @app.route('/pycon2016')
+    def pycon2016():
+        return redirect(url_for('wiki.detail', title='PyCon US 2016'))
+
     if not app.debug:
         handler = logging.StreamHandler(sys.stderr)
         handler.setLevel(logging.ERROR)
-        app.logger.addHander(handler)
+        app.logger.addHandler(handler)
 
     return app
