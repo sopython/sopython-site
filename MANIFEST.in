@@ -1,5 +1,5 @@
 include requirements.txt AUTHORS.rst LICENSE.rst
-recursive-include docs *
+graft docs
 prune docs/_build
 recursive-include sopy/migrations *.py
 graft sopy/static

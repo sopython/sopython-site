@@ -1,6 +1,8 @@
 import logging
 
 import sys
+
+import pkg_resources
 from flask import Flask
 from flask import render_template
 from flask_alembic import Alembic
@@ -8,16 +10,16 @@ from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
 from sopy.ext.sqlalchemy import SQLAlchemy
 
-__version__ = '1.5.2'
+__version__ = pkg_resources.get_distribution('sopy').version
 
 alembic = Alembic()
 babel = Babel()
 db = SQLAlchemy()
 
 
-def create_app(info=None):
+def create_app():
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_object('sopy.config.defaults')
+    app.config.from_object('sopy.config')
     app.config.from_pyfile('config.py', True)
 
     app.cli.add_command(alembic_cli, 'db')

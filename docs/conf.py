@@ -1,3 +1,4 @@
+from datetime import datetime
 from sopy import __version__
 
 # -- General configuration ------------------------------------------------
@@ -19,14 +20,14 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'sopython-site'
-copyright = '2014, sopython organization'
+copyright = '2014 - {}, sopython organization'.format(datetime.utcnow().year)
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
 # The short X.Y version.
-version = __version__
+version = '.'.join(__version__.split('.')[:2])
 # The full version, including alpha/beta/rc tags.
 release = version
 
