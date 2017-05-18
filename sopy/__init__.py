@@ -1,7 +1,8 @@
 import logging
+import os
 import sys
 import pkg_resources
-from flask import Flask
+from flask import Flask, send_from_directory
 from flask import render_template, url_for, redirect
 from flask_alembic import Alembic
 from flask_alembic.cli.click import cli as alembic_cli
@@ -65,9 +66,20 @@ def create_app(info=None):
     def internal_server_error(e):
         return render_template('errors/500.html'), 500
 
-    @app.route('/pycon2016')
-    def pycon2016():
-        return redirect(url_for('wiki.detail', title='PyCon US 2016'))
+    @app.route('/.well-known/<path:path>')
+    def serve_lets_encrypt_challenge(path):
+        return send_from_directory(
+            os.path.join(
+                app.instance_path,
+                'lets_encrypt_challenge',
+                '.well-known'
+            ),
+            path
+        )
+
+    @app.route('/pycon')
+    def pycon():
+        return redirect(url_for('wiki.detail', title='PyCon US 2017'))
 
     if not app.debug:
         handler = logging.StreamHandler(sys.stderr)
