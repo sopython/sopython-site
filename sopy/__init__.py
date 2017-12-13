@@ -3,9 +3,7 @@ import os
 import sys
 
 import pkg_resources
-from flask import (
-    Flask, render_template, send_from_directory, redirect, url_for
-)
+from flask import Flask, render_template, send_from_directory
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
 
@@ -84,10 +82,6 @@ def create_app(info=None):
             ),
             path
         )
-
-    @app.route('/pycon')
-    def pycon():
-        return redirect(url_for('wiki.detail', title='PyCon US 2017'))
 
     if not app.debug:
         handler = logging.StreamHandler(sys.stderr)
