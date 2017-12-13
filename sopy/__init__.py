@@ -1,19 +1,19 @@
 import logging
 import os
 import sys
+
 import pkg_resources
-from flask import Flask, send_from_directory
-from flask import render_template, url_for, redirect
-from flask_alembic import Alembic
+from flask import (
+    Flask, render_template, send_from_directory, redirect, url_for
+)
 from flask_alembic.cli.click import cli as alembic_cli
 from flask_babel import Babel
-from sopy.ext.sqlalchemy import SQLAlchemy
+
+from sopy.ext.sqlalchemy import db
 
 __version__ = pkg_resources.get_distribution('sopy').version
 
-alembic = Alembic()
 babel = Babel()
-db = SQLAlchemy()
 
 
 def create_app(info=None):
@@ -26,7 +26,6 @@ def create_app(info=None):
     app.jinja_env.trim_blocks = True
     app.jinja_env.lstrip_blocks = True
 
-    alembic.init_app(app)
     babel.init_app(app)
     db.init_app(app)
 
@@ -34,7 +33,10 @@ def create_app(info=None):
 
     views.init_app(app)
 
-    from sopy import auth, tags, se_data, canon, salad, wiki, pages, admin, transcript, spoiler
+    from sopy import (
+        auth, tags, se_data, canon, salad, wiki, pages, admin, transcript,
+        spoiler
+    )
 
     app.register_blueprint(auth.bp, url_prefix='/auth')
     app.register_blueprint(tags.bp, url_prefix='/tags')
@@ -51,8 +53,14 @@ def create_app(info=None):
     def index():
         return render_template('index.html')
 
-    app.add_url_rule('/favicon.ico', None, app.send_static_file, defaults={'filename': 'favicon.ico'})
-    app.add_url_rule('/robots.txt', None, app.send_static_file, defaults={'filename': 'robots.txt'})
+    app.add_url_rule(
+        '/favicon.ico', None, app.send_static_file,
+        defaults={'filename': 'favicon.ico'}
+    )
+    app.add_url_rule(
+        '/robots.txt', None, app.send_static_file,
+        defaults={'filename': 'robots.txt'}
+    )
 
     @app.errorhandler(403)
     def forbidden(e):
