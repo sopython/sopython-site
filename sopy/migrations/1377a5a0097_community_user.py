@@ -16,13 +16,6 @@ from sqlalchemy import event, exc
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import Session
 
-try:
-    event.remove(Session, 'before_commit', _SessionSignalEvents.session_signal_before_commit)
-    event.remove(Session, 'after_commit', _SessionSignalEvents.session_signal_after_commit)
-    event.remove(Session, 'after_rollback', _SessionSignalEvents.session_signal_after_rollback)
-except exc.InvalidRequestError:
-    pass
-
 Base = declarative_base()
 
 
