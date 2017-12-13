@@ -40,7 +40,7 @@ setup(
     },
     entry_points = {
         'console_scripts': [
-            'sopy = sopy.manage:cli.main',
+            'sopy = sopy.cli:main',
         ],
     },
 )
