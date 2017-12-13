@@ -1,23 +1,24 @@
-**so**\ python
-==============
+sopython
+========
 
-Cabbage, World!
-
-Welcome to **so**\ python, the website of the Python community on `Stack Overflow`_.
+Welcome to **so**\ python, the website of the Python community on
+`Stack Overflow`_.
 
 Join us for chat in the `Python room`_!
 
-.. _Stack Overflow: http://stackoverflow.com/
-.. _Python room: http://chat.stackoverflow.com/rooms/6/python
+.. _Stack Overflow: https://stackoverflow.com/questions/tagged/python?sort=frequent
+.. _Python room: https://chat.stackoverflow.com/rooms/6/python
+
 
 Develop
 -------
 
 ::
 
-    git clone ssh://git@github.com/sopython/sopython-site sopy
-    pip install https://github.com/mitsuhiko/flask/archive/master.zip
-    pip install -e ./sopy
+    git clone ssh://git@github.com/sopython/sopython-site
+    cd sopython-site
+    pip install -e '.[dev]'
+
 
 Documentation
 -------------
