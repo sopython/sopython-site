@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import current_app, g
 from flask_alembic import Alembic
 from flask_sqlalchemy import Model as BaseModel, SQLAlchemy as BaseSQLAlchemy
@@ -61,10 +63,17 @@ class Model(BaseModel):
         return o
 
 
+def rev_id():
+    offset = datetime(2017, 12, 13, 21)
+    now = datetime.utcnow()
+    return str(int((now - offset).total_seconds()))
+
+
 class SQLAlchemy(BaseSQLAlchemy):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.alembic = Alembic()
+        self.alembic.rev_id = rev_id
 
     def init_app(self, app):
         super(SQLAlchemy, self).init_app(app)
