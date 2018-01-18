@@ -1,8 +1,8 @@
 sopython
 ========
 
-Welcome to **so**\ python, the website of the Python community on
-`Stack Overflow`_.
+Welcome to **so**\ python, the unofficial website of the Python
+community on `Stack Overflow`_.
 
 Join us for chat in the `Python room`_!
 
