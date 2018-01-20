@@ -19,10 +19,10 @@
                 </div>
                 <div class="collapse navbar-collapse" id="base-nav-collapse">
                     <ul class="nav navbar-nav">
-                        <li class="{% block nav_wiki %}{% endblock %}"><a href="{{ url_for('wiki.index') }}">Wiki</a></li>
-                        <li class="{% block nav_canon %}{% endblock %}"><a href="{{ url_for('canon.index') }}">Common Questions</a></li>
-                        <li class="{% block nav_salad %}{% endblock %}"><a href="{{ url_for('salad.index') }}">Salad Language</a></li>
                         <li class="{% block nav_chatroom %}{% endblock %}"><a href="{{ url_for('pages.page', name='chatroom') }}">Chatroom</a></li>
+                        <li class="{% block nav_canon %}{% endblock %}"><a href="{{ url_for('canon.index') }}">Common Questions</a></li>
+                        <li class="{% block nav_wiki %}{% endblock %}"><a href="{{ url_for('wiki.index') }}">Wiki</a></li>
+                        <li class="{% block nav_salad %}{% endblock %}"><a href="{{ url_for('salad.index') }}">Salad Language</a></li>
                         <li class="{% block nav_transcript %}{% endblock %}"><a href="{{ url_for('transcript.index') }}">Transcripts</a></li>
                         {% if has_group('Dark Council') %}<li class="{% block nav_admin %}{% endblock %}"><a href="{{ url_for('admin.groups_index') }}">Admin</a></li>{% endif %}
                     </ul>
@@ -43,7 +43,7 @@
 
     <footer class="container small"><div class="row"><div class="col-md-12">
       <p>Made by the cabbage addicts from the <a href="https://chat.stackoverflow.com/rooms/6/python">Python room</a> on <a href="https://stackoverflow.com/">Stack Overflow</a>.</p>
-      <p>This site is not affiliate with Stack Overflow. Contact us via <a href="https://chat.stackoverflow.com/rooms/6/python">chat</a> or <a href="mailto:chatroom@sopython.com">email</a>.</p>
+      <p>This site is not affiliated with Stack Overflow. Contact us via <a href="https://chat.stackoverflow.com/rooms/6/python">chat</a> or <a href="mailto:chatroom@sopython.com">email</a>.</p>
       <p><a href="https://github.com/sopython/sopython-site">sopython-site v{{ __version__ }}</a></p>
     </div></div></footer>
 
