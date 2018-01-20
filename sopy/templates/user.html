@@ -1,0 +1,10 @@
+{% macro user_display(user, height=16) %}
+  <span title="{{ user.display_name }} ({{ user.id }})">
+    <img src="{{ user.profile_image }}" height="{{ height }}">
+    {{ user.display_name }}
+  </span>
+{% endmacro %}
+
+{% macro user_link(user, height=24) -%}
+    <a href="{{ user.profile_link }}">{{ user_display(user, height) }}</a>
+{%- endmacro %}

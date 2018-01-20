@@ -1,4 +1,5 @@
 {% extends 'transcript/base.html' %}
+{% from 'user.html' import user_link %}
 
 {% set script_ace = True %}
 
@@ -48,7 +49,7 @@
                         {% for message in item.messages %}
                             <tr>
                                 <td><input type="checkbox" name="remove-{{ message.id }}"/></td>
-                                <td>{{ message.user.display_name }}</td>
+                                <td>{{ user_link(message.user) }}</td>
                                 <td>{% if message.rendered %}{{ message.content|safe }}{% else %}<pre>{{ message.content }}</pre>{% endif %}</td>
                             </tr>
                         {% endfor %}
