@@ -8,7 +8,7 @@
         {% if page.community %}<div class="alert alert-info">This page is in community mode.  Any user with 100 rep may edit it.</div>{% endif %}
 
         <ul class="list-inline pull-right">
-            <li><small><i>Last edited on {{ page.updated|datetimeformat }} by {{ page.author }}</i></small></li>
+            <li><small><i>Last edited on {{ page.updated|datetimeformat }} by {{ page.author.display_name }}</i></small></li>
             {% if has_group('editor') or page.draft or page.community %}<li><a href="{{ page.update_url }}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i> Edit</a></li>{% endif %}
             {% if has_group('editor') %}<li><a href="{{ page.delete_url }}" class="btn btn-danger btn-sm"><i class="fa fa-minus"></i> Remove</a></li>{% endif %}
         </ul>

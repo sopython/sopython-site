@@ -1,7 +1,7 @@
-include requirements.txt LICENSE.rst
+include LICENSE.rst
 graft docs
 prune docs/_build
 recursive-include sopy/migrations *.py
 graft sopy/static
 graft sopy/templates
-recursive-exclude *.pyc
+global-exclude *.pyc
