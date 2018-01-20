@@ -1,4 +1,5 @@
 {% extends 'transcript/base.html' %}
+{% from 'user.html' import user_link %}
 
 {% block content %}
     <div class="row"><div class="col-md-12">
@@ -17,8 +18,7 @@
         {% for message in item.messages %}
             <div class="well well-sm">
                 <ul class="list-inline">
-                    <li><a href="{{ message.user.profile_link }}"><img src="{{ message.user.profile_image }}" alt="" height="24"/></a></li>
-                    <li><a href="{{ message.user.profile_link }}">{{ message.user.display_name }}</a></li>
+                    <li>{{ user_link(message.user) }}</li>
                     <li>{{ message.ts.strftime('%Y-%m-%d %H:%M') }}</li>
                     {% if message.stars %}<li><i class="fa fa-star"></i> {{ message.stars }}</li>{% endif %}
                 </ul>
