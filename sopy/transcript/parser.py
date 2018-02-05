@@ -39,7 +39,7 @@ def previous_page(current):
     # get and parse the new page
     r = requests.get(base_url.format(element['href']))
     r.raise_for_status()
-    return BeautifulSoup(r.content, 'lxml')
+    return BeautifulSoup(r.text, 'lxml')
 
 
 def next_page(current):
@@ -74,7 +74,7 @@ def next_page(current):
     # get and parse the new page
     r = requests.get(base_url.format(element['href']))
     r.raise_for_status()
-    return BeautifulSoup(r.content, 'lxml')
+    return BeautifulSoup(r.text, 'lxml')
 
 
 def page_date(page):
@@ -101,11 +101,11 @@ def get_range(start_id, end_id):
     # need to check that the range is in the same room, so fetch start and end pages
     r = requests.get(permalink_url.format(start_id))
     r.raise_for_status()
-    page = BeautifulSoup(r.content, 'lxml')
+    page = BeautifulSoup(r.text, 'lxml')
     room_href = page.find('div', id='sidebar-content').find('span', class_='room-name').a['href']
     r = requests.get(permalink_url.format(end_id))
     r.raise_for_status()
-    end_page = BeautifulSoup(r.content, 'lxml')
+    end_page = BeautifulSoup(r.text, 'lxml')
 
     if room_href != end_page.find('div', id='sidebar-content').find('span', class_='room-name').a['href']:
         raise ValueError('Start and end are in different rooms.')
