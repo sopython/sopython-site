@@ -1,12 +1,12 @@
 from datetime import datetime
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from requests import RequestException
 from wtforms.fields import StringField, DateTimeField, TextAreaField, IntegerField
 from wtforms.validators import Optional, InputRequired
 from sopy.transcript.parser import get_range
 
 
-class CreateTranscriptForm(Form):
+class CreateTranscriptForm(FlaskForm):
     title = StringField(validators=[InputRequired()])
     ts = DateTimeField('When', format='%Y-%m-%d %H:%M', validators=[Optional()])
     body = TextAreaField('Description')
@@ -56,7 +56,7 @@ class CreateTranscriptForm(Form):
             obj.ts = self.messages[0].ts
 
 
-class UpdateTranscriptForm(Form):
+class UpdateTranscriptForm(FlaskForm):
     title = StringField(validators=[InputRequired()])
     ts = DateTimeField('When', format='%Y-%m-%d %H:%M', validators=[Optional()])
     body = TextAreaField('Description')

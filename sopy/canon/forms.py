@@ -1,5 +1,5 @@
 from flask import request
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import Form as BaseForm
 from wtforms.fields import TextAreaField
 from wtforms.fields.core import BooleanField
@@ -12,7 +12,7 @@ from sopy.ext.forms import SeparatedField, StripStringField
 from sopy.tags.models import Tag
 
 
-class CanonItemForm(Form):
+class CanonItemForm(FlaskForm):
     title = StripStringField(validators=[InputRequired()])
     excerpt = TextAreaField()
     body = TextAreaField()

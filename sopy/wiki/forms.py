@@ -1,4 +1,4 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 import re
 from markupsafe import Markup
 from wtforms.fields import TextAreaField, BooleanField
@@ -7,7 +7,7 @@ from sopy.ext.forms import StripStringField
 from sopy.wiki.models import WikiPage
 
 
-class WikiPageForm(Form):
+class WikiPageForm(FlaskForm):
     title = StripStringField(validators=[DataRequired()])
     body = TextAreaField()
 

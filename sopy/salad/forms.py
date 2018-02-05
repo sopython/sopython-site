@@ -1,8 +1,8 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms.validators import InputRequired
 from sopy.ext.forms import StripStringField
 
 
-class SaladForm(Form):
+class SaladForm(FlaskForm):
     term = StripStringField(validators=[InputRequired()])
     definition = StripStringField(validators=[InputRequired()])

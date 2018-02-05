@@ -1,6 +1,6 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from wtforms import TextAreaField
 from wtforms.validators import InputRequired
 
-class SpoilerForm(Form):
+class SpoilerForm(FlaskForm):
     message = TextAreaField(validators=[InputRequired()])

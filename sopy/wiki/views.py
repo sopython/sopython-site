@@ -1,5 +1,5 @@
-from flask import redirect, render_template, request, session, url_for
-from flask_wtf import Form
+from flask import redirect, render_template, request, session
+from flask_wtf import FlaskForm
 from sopy import db
 from sopy.auth.login import group_required, current_user, login_required, require_group, has_group
 from sopy.ext.views import redirect_for
@@ -72,7 +72,7 @@ def update(title=None):
 @group_required('editor')
 def delete(title):
     page = WikiPage.query.filter(WikiPage.title == title).first_or_404()
-    form = Form()
+    form = FlaskForm()
 
     if form.validate_on_submit():
         db.session.delete(page)

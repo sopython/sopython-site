@@ -1,5 +1,5 @@
 from flask import request, render_template
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 from sopy import db
 from sopy.auth.login import group_required, current_user
 from sopy.ext.views import redirect_for
@@ -58,7 +58,7 @@ def move(id, down=False):
 @group_required('Dark Council')
 def delete(id):
     item = Salad.query.get_or_404(id)
-    form = Form()
+    form = FlaskForm()
 
     if form.validate_on_submit():
         item.delete()
