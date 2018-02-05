@@ -62,6 +62,7 @@ class UpdateTranscriptForm(FlaskForm):
     body = TextAreaField('Description')
 
     def process(self, formdata=None, obj=None, data=None, **kwargs):
+        formdata = self.meta.wrap_formdata(self, formdata)
         super().process(formdata, obj, data, **kwargs)
 
         if formdata is not None:
