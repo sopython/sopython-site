@@ -6,7 +6,7 @@ with open('README.rst', encoding='utf8') as f:
 
 setup(
     name='sopy',
-    version='1.7.1',
+    version='1.8',
     url='http://sopython.com/',
     author='David Lord',
     author_email='davidism@gmail.com',
